@@ -1,87 +1,38 @@
-<!DOCTYPE html>
+<<!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Gestão Educacional</title>
-    <link rel="icon" href="Assets/img/" type="image/x-icon">
-    <link rel="stylesheet" href="Assets\css\alunos.css ">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.0/papaparse.min.js"></script>
+    <link rel="icon" href="assets/img/painel-de-controle.png" type="image/x-icon">
+    <link rel="stylesheet" href="assets/css/escola.css">
+    <title>Sobre o Dashboard</title>
 </head>
-
 <body>
-    <header class="header">
-        <nav>
-            <div class="titulo">
-                <h1><strong>Dashboard de Gestão Educacional 2022</strong></h1>
-            </div>
-            <div class="logo">
-                <img src="Assets/img/inep.svg" alt="Imagem Logo INEP"
-        > 
-            </div> 
-        </nav>
+    <header>
+        <div class="home">
+            <img src="assets/img/silhueta-de-icone-de-casa 2.png" alt="botao home">
+        </div>
+        <div class="titulo">
+            <h1>Sobre o Dashboard</h1>
+        </div>
+        <div class="logo">
+            <img src="assets/img/inep.svg" alt="Imagem Logo INEP">
+        </div>
     </header>
-    <br> <br>
-    <br> <br>
-    <div class="database">
-        <h1>Faça o download dos Bancos de dados aqui:</h1>
-        <div class="download-aluno">
-            <a href="alunos.html">Alunos</a>
-        </div>
-        <div class="download-escola">
-            <a href="escola.html">Escola</a>
-        </div>
-    </div>
-    <div class="filter">
-        <input type="file" id="csvFile" accept=".csv">
-        <br> <br>
-        <br> <br>
-        <div class="serie">
-            <label for="series">Selecionar Série:</label>
-            <select id="series"></select>
-        </div>
-        <br> <br>
-        <br> <br>
-        <div class="tipo">
-            <label for="chartType">Tipo de Gráfico:</label>
-            <select id="chartType">
-                <option value="bar">Barras</option>
-                <option value="line">Linhas</option>
-                <option value="pie">Pizza</option>
-            </select>
-        </div>
-        <br> <br>
-        <br> <br>
-    </div>
-    <div class="chart">
-        <br> <br>
-        <canvas id="chartCanvas"></canvas>
-        <div id="dataPreview"></div>
-        <br> <br>
-        <br> <br>
-        <div class="button-container">
-            <button onclick="exportarGrafico()">Exportar Gráfico</button>
-        </div>
-    </div>
-
+    
     <footer class="footer">
         <div class="about">
             <a href="sobre.html">Sobre o Dashboard</a>
         </div>
-        <div>
+        <div class="creators">
             <p>Arthur Vinícius, Gabriel Henrique, Luiz Henrique e Yuri Catunda</p>
         </div>
-        <div class="links">
 
+        <div class="links">
             <div class="contact">
                 <a href="contato.html">Contato</a>
             </div>
         </div>
     </footer>
-
-    <script src="script.js"></script>
 </body>
-
 </html>
