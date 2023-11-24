@@ -4,21 +4,23 @@ body {
     width: 100%;
     height: 100%;
     margin: 0;
-    padding-top: 200px;
+    padding-top: 100px;
 }
 
 header {
-    position: fixed;
-    display: flex;
-    top: 0;
-    width: 100%;
-    height: 20%;
-    margin-bottom: 40px;
-    background-color: #9BB0E5;
-    justify-content: space-between;
-    color: #ffffff;
-    align-items: center;
-}
+        position: fixed;
+        display: flex;
+        top: 0;
+        width: 100%;
+        height: 15%;
+        margin-bottom: 40px;
+        background-color: #9BB0E5;
+        justify-content: space-between;
+        color: #ffffff;
+        align-items: center;
+        z-index: 1000;
+    }
+
 
 .titulo {
     font-size: 20px;
@@ -54,51 +56,8 @@ header {
 }
 
 .circles,
-.subtitles {
-    flex-shrink: 0;
+.subtitles{
     margin-top: 18%;
-    padding-left: 4%;
-}
-
-.orange-circle,
-.brown-circle,
-.gray-circle,
-.blue-circle {
-    margin-top: 5px;
-    padding-top: 12px;
-}
-
-.norte,
-.nordeste,
-.centro-oeste,
-.sudeste,
-.sul {
-    font-size: 12px;
-    padding-top: 1px;
-}
-.norte {
-    margin-top: 10px;
-    padding-bottom: 5px;
-}
-
-.nordeste {
-    margin-top: 10px;
-    padding-bottom: 5px;
-}
-
-.centro-oeste {
-    margin-top: 10px;
-    padding-bottom: 5px;
-}
-
-.sudeste {
-    margin-top: 10px;
-    padding-bottom: 5px;
-}
-
-.sul {
-    margin-top: 10px;
-    padding-bottom: 5px;
 }
 
 .texto {
@@ -133,17 +92,18 @@ header {
 .links-dashboard {
     display: flex;
     flex-direction: row;
-    padding-left: 300px;
+    padding-left: 100px;
 }
 
 .links-dashboard a {
-    margin-right: 350px;
+    position: relative; /* Set position to relative */
+    margin-right: 20px;
     border: 2px solid black;
-    border-radius: 20px;
-    background-color: 0047FF;
+    border-radius: 10px; 
+    background-color: #0047FF; /* Fix the color value */
     opacity: 56%;
-    width: 270px;
-    height: 249px;
+    width: 200px;
+    height: 180px; 
     align-items: center;
     justify-content: center;
     text-align: center;
@@ -151,11 +111,24 @@ header {
     background-color: rgba(0, 71, 255, 0.56);
     color: #FFF;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
-    font-family: Roboto Mono;
-    font-size: 40px;
+    font-family: 'Roboto Mono', monospace; /* Use the correct font-family */
+    font-size: 20px; 
     font-style: normal;
     font-weight: 700;
     line-height: normal;
+    flex-shrink: 0;
+}
+
+.links-dashboard a .text-overlay {
+    position: absolute; /* Set position to absolute */
+    top: 50%; /* Adjust as needed */
+    left: 50%; /* Adjust as needed */
+    transform: translate(-50%, -50%); /* Center the text */
+    color: #FFF;
+    font-size: 12px; /* Adjust as needed */
+    font-weight: 700;
+    text-align: center;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
 .links-dashboard:hover {
@@ -165,8 +138,9 @@ header {
 }
 
 .links-dashboard img {
-    width: 139px;
-    height: 119px;
+    width: auto;
+    height: 70%;
+    margin-top: 10px; 
 }
 
 
