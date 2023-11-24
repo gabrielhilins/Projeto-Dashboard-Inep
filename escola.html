@@ -1,11 +1,15 @@
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="assets/img/painel-de-controle.png" type="image/x-icon">
     <link rel="stylesheet" href="assets/css/escola.css">
-    <title>Sobre o Dashboard</title>
+    <script src="assets/js/main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.7.0/nouislider.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.0/papaparse.min.js"></script>
+    <title>Escolas</title>
 </head>
 <body>
     <header>
@@ -15,13 +19,98 @@
         </a>
         </div>
         <div class="titulo">
-            <h1>Sobre o Dashboard</h1>
+            <h1>Dashboard de Gestão Educacional 2022 | Escolas</h1>
         </div>
         <div class="logo">
             <img src="assets/img/inep.svg" alt="Imagem Logo INEP">
         </div>
     </header>
     
+    <div class="container">
+        <div class="sidebar">
+            <aside class=" h-full" style="width: 440px; height: 790px; background-color: #9BB0E5; border-radius: 20px;">
+                <div class="titulo-filtros">
+                    <p>Filtros</p>
+                </div>
+                
+                    <label for="estados">Estados</label>
+                    <select id="estados">
+                        <option value="AC">Acre</option>
+                        <option value="AL">Alagoas</option>
+                        <option value="AP">Amapá</option>
+                        <option value="AM">Amazonas</option>
+                        <option value="BA">Bahia</option>
+                        <option value="CE">Ceará</option>
+                        <option value="DF">Distrito Federal</option>
+                        <option value="ES">Espírito Santo</option>
+                        <option value="GO">Goiás</option>
+                        <option value="MA">Maranhão</option>
+                        <option value="MT">Mato Grosso</option>
+                        <option value="MS">Mato Grosso do Sul</option>
+                        <option value="MG">Minas Gerais</option>
+                        <option value="PA">Pará</option>
+                        <option value="PB">Paraíba</option>
+                        <option value="PR">Paraná</option>
+                        <option value="PE">Pernambuco</option>
+                        <option value="PI">Piauí</option>
+                        <option value="RJ">Rio de Janeiro</option>
+                        <option value="RN">Rio Grande do Norte</option>
+                        <option value="RS">Rio Grande do Sul</option>
+                        <option value="RO">Rondônia</option>
+                        <option value="RR">Roraima</option>
+                        <option value="SC">Santa Catarina</option>
+                        <option value="SP">São Paulo</option>
+                        <option value="SE">Sergipe</option>
+                        <option value="TO">Tocantins</option>
+                    </select>
+                    
+                    <label for="dependencia">Dependência:</label>
+                    <select id="dependencia">
+                        <option value="estadual">Estadual</option>
+                        <option value="federal">Federal</option>
+                        <option value="municipal">Municipal</option>
+                        <option value="privada">Privada</option>
+                    </select>
+                    <label for="situacao">Situação</label>
+                    <select id="situacao">
+                        <option value="em-atividade">Em Atividade</option>
+                        <option value="inativa">Inativa</option>
+                        <option value="paralisada">Paralisada</option>
+                    </select>
+
+                    <label for="localizacao">Localização</label>
+                    <select id="localizacao">
+                        <option value="urbano">Urbano</option>
+                        <option value="rural">Rural</option>
+                    </select>
+                    
+                    <label for="internet">Internet</label>
+                    <select id="internet">
+                        <option value="possui-acesso">Possui Acesso</option>
+                        <option value="nao-possui-acesso">Não possui acesso</option>
+                    </select>    
+            </aside>
+        </div>
+        <div class="graficos">
+            <div class="grafico" id="pizza">
+                    <button>Exportar Gráfico</button>
+            </div>
+            
+            <div class="grafico" id="line">
+                    <button>Exportar Gráfico</button>
+            </div>
+        
+            <div class="grafico" id="bar">
+                    <button>Exportar Gráfico</button>
+            </div>
+        
+            <div class="grafico" id="horizontal-bar">
+                <div class="button-container">
+                    <button>Exportar Gráfico</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <footer class="footer">
         <div class="about">
             <a href="sobre.html">Sobre o Dashboard</a>
