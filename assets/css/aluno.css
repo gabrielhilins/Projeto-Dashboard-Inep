@@ -96,12 +96,9 @@ aside {
 }
 
 hr{
-    
     border: 0;
     height: 2px;
     background: #fff;
-    
-
 }
 
 label {
@@ -138,8 +135,7 @@ a:hover {
 }
 
 .grafico {
-    height: 350px;
-    background-color:#FFF;
+    background-color:#ffffff;
     border: 1px solid #ddd;
     border-radius: 15px;
     padding: 10px;
@@ -154,6 +150,10 @@ a:hover {
 #bar,
 #horizontal-bar {
     width: 400px;
+}
+
+#pizza {
+    height: 450px;
 }
 
 button {
