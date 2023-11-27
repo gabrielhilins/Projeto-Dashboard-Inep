@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="assets/img/painel-de-controle.png" type="image/x-icon">
     <link rel="stylesheet" href="assets/css/aluno.css">
+    <script src="assets/js/script.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.7.0/nouislider.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.0/papaparse.min.js"></script>
@@ -14,103 +15,93 @@
     <header>
         <div class="home">
             <a href="index.html">
-                <img src="assets/img/silhueta-de-icone-de-casa 2.png" alt="botao home">
-        </a>
+                <img src="assets/img/silhueta-de-icone-de-casa 2.png" alt="botao home" width="28px" height="28px">
+            </a>
         </div>
         <div class="titulo">
             <h1>Dashboard de Gestão Educacional 2022 | Alunos</h1>
         </div>
         <div class="logo">
-            <img src="assets/img/inep.svg" alt="Imagem Logo INEP">
+            <img src="assets/img/inep.svg" alt="Imagem Logo INEP" width="100px" height="100px">
         </div>
     </header>
-    <a href="assets/download/alunos.csv" download="aluno.csv" class="download-link">
-        Baixar Arquivo
-    </a>
+
     <div class="container">
         <div class="sidebar">
-            <aside class=" h-full" style="width: 440px; height: 790px; background-color: #9BB0E5; border-radius: 20px;">
+            <aside class="h-full" style="width: 300px; height: 525px; background-color: #9BB0E5; border-radius: 20px;">
                 <div class="titulo-filtros">
                     <p>Filtros</p>
                 </div>
-                <input type="file" id="csvFile" accept=".csv">
+                <label for="filtro">Filtrar por:</label>
+                <select id="filtro">
+                    <option value="cor_raca_etnia">Cor/Raça</option>
+                    <option value="etapa_ensino">Etapa de Ensino</option>
+                    <option value="genero">Gênero</option>
+                    <option value="idade">Idade</option>
+                </select>
                 <hr>
-                    <label for="escolaridade">Escolaridade</label>
-                    <select id="series">
-                        <option value="ensino-basico">Ensino Básico</option>
-                        <option value="ensino-fundamental">Ensino Fundamental</option>
-                        <option value="ensino-medio">Ensino Médio</option>
+                <div id="filtros-especificos">
+                    <!-- Opções de Escolaridade -->
+                    <label for="etapa_ensino">Escolaridade</label>
+                    <select id="etapa_ensino">
+                        <option value="QT_MAT_INF">Ensino Infantil</option>
+                        <option value="QT_MAT_FUND">Ensino Fundamental</option>
+                        <option value="QT_MAT_MED">Ensino Médio</option>
                     </select>
                     <hr>
-                    <div>
-                        <label for="idade">Idade:</label>
-                        <input type="range" id="idade" min="1" max="25" value="1" step="1">
-                        <span id="idade-value">1</span>
-                    </div>
-                    
-                    <script>
-                        document.addEventListener('DOMContentLoaded', function () {
-                            var idadeSlider = document.getElementById('idade');
-                            var idadeValue = document.getElementById('idade-value');
-                    
-                            idadeSlider.addEventListener('input', function () {
-                                idadeValue.textContent = this.value;
-                            });
-                    
-                            idadeSlider.addEventListener('change', function () {
-                                // Faça algo com o valor escolhido
-                                console.log('Idade escolhida:', this.value);
-                            });
-                        });
-                    </script>
-                    <hr>
-                    <label for="raca">Raça</label>
-                    <select id="raca">
-                        <option value="amarelo">Amarelo</option>
-                        <option value="branco">Branco</option>
-                        <option value="indigena">Indígena</option>
-                        <option value="pardo">Pardo</option>
-                        <option value="preto">Preto</option>
+                    <!-- Opções de Idade -->
+                    <label for="idade">Idade:</label>
+                    <select id="idade">
+                        <option value="QT_MAT_BAS_0_3">0 à 3 anos</option>
+                        <option value="QT_MAT_BAS_4_5">4 à 5 anos</option>
+                        <option value="QT_MAT_BAS_6_10">6 à 10 anos</option>
+                        <option value="QT_MAT_BAS_11_14">11 à 14 anos</option>
+                        <option value="QT_MAT_BAS_15_17">15 à 17 anos</option>
+                        <option value="QT_MAT_BAS_18_MAIS">18 anos ou mais</option>
                     </select>
                     <hr>
+                    <!-- Opções de Raça -->
+                    <label for="cor_raca_etnia">Raça</label>
+                    <select id="cor_raca_etnia">
+                        <option value="QT_MAT_BAS_AMARELA">Amarelo</option>
+                        <option value="QT_MAT_BAS_BRANCA">Branco</option>
+                        <option value="QT_MAT_BAS_INDIGENA">Indígena</option>
+                        <option value="QT_MAT_BAS_PARDA">Pardo</option>
+                        <option value="QT_MAT_BAS_PRETA">Preto</option>
+                    </select>
+                    <hr>
+                    <!-- Opções de Gênero -->
                     <label for="genero">Gênero</label>
                     <select id="genero">
-                        <option value="masc">Masculino</option>
-                        <option value="fem">Feminino</option>
-                    </select>         
-                      
+                        <option value="QT_MAT_BAS_MASC">Masculino</option>
+                        <option value="QT_MAT_BAS_FEM">Feminino</option>
+                    </select>
+                </div>
             </aside>
         </div>
+     <!-- ... Seu HTML anterior ... -->
+    
         <div class="graficos">
-            <div class="grafico" id="pizza">
-                <canvas id="pieChart"></canvas>
-                <div class = "button-container">
-                    <button onclick="exportarGrafico('pieChart')">Exportar Gráfico</button>
-                </div>
-            </div>
-            
-        
-            <div class="grafico" id="line">
-                <canvas id="lineChart"></canvas>
-                <div class = "button-container">
-                    <button onclick="exportarGrafico('lineChart')">Exportar Gráfico</button>
-                </div>
-            </div>
-        
-            <div class="grafico" id="bar">
-                <canvas id="barChart"></canvas>
-                <div class = "button-container">
-                    <button onclick="exportarGrafico('barChart')">Exportar Gráfico</button>
-                </div> 
-            </div>
-        
-            <div class="grafico" id="horizontal-bar">
-                <canvas id="horizontalBarChart"></canvas>
-                <div class="button-container">
-                    <button onclick="exportarGrafico('horizontalBarChart')">Exportar Gráfico</button>
-                </div>
-            </div>
-        </div>
+           <div class="grafico" id="pizza">
+                <button onclick="exportarGrafico('grafico-pizza')">Exportar Gráfico</button>
+                <canvas id="grafico-pizza"></canvas>
+    </div>
+    
+    <div class="grafico" id="line">
+        <button onclick="exportarGrafico('grafico-linha')">Exportar Gráfico</button>
+        <canvas id="grafico-linha"></canvas>
+    </div>
+
+    <div class="grafico" id="bar">
+        <button onclick="exportarGrafico('grafico-barra')">Exportar Gráfico</button>
+        <canvas id="grafico-barra"></canvas>
+    </div>
+
+    <div class="grafico" id="horizontal-bar">
+        <button onclick="exportarGrafico('grafico-horizontal-bar')">Exportar Gráfico</button>
+        <canvas id="grafico-horizontal-bar"></canvas>
+    </div>
+</div>
     </div>
     <footer class="footer">
         <div class="about">
@@ -126,8 +117,5 @@
             </div>
         </div>
     </footer>
-    
-    <script src="script.js"></script>
-
 </body>
-</html> 
+</html>
