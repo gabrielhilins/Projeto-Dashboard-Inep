@@ -1,106 +1,217 @@
-let dadosCSV;
-let grafico;
-let serieSelecionada;
-let cabecalhos;
+var LABELS_CSV = [];
+var DATA_CSV = {};
 
-const entradaArquivoCSV = document.getElementById('csvFile');
-const selecaoSeries = document.getElementById('series');
-const selecaoTipoGrafico = document.getElementById('chartType');
-const chartCanvas = document.getElementById('chartCanvas');
+var chartBar = null;
+// Função para criar um gráfico de barras
 
-entradaArquivoCSV.addEventListener('change', processarSelecaoArquivo);
-selecaoSeries.addEventListener('change', function () {
-    serieSelecionada = selecaoSeries.value;
-    atualizarGrafico();
-});
-
-function processarSelecaoArquivo(evento) {
-    const arquivo = evento.target.files[0];
-    Papa.parse(arquivo, {
-        complete: function (resultado) {
-            dadosCSV = resultado.data;
-            cabecalhos = dadosCSV[0];
-            popularSelecaoSeries();
-            serieSelecionada = cabecalhos[0];
-            popularPreviaDados();
-            atualizarGrafico(); 
+// Gráfico de Barras
+function criarGraficoDeBarras(data) {
+  const ctx = document.getElementById('barChart').getContext('2d');
+  if(chartBar){
+    chartBar.clear();
+    chartBar.destroy();
+  }
+  chartBar = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: data.labels,
+      datasets: [{
+        label: 'Valores',
+        data: data.values,
+        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+        borderColor: 'rgba(75, 192, 192, 1)',
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: {
+          beginAtZero: true // Opção para começar o Eixo Y do Zero
         }
-    });
+      }
+    }
+  });
 }
 
-function popularSelecaoSeries() {
-    cabecalhos.forEach(cabecalho => {
-        const opcao = document.createElement('option');
-        opcao.value = cabecalho;
-        opcao.textContent = cabecalho;
-        selecaoSeries.appendChild(opcao);
-    });
+// Gráfico de Pizza
+var chartPizza = null;
+// Função para criar um gráfico de pizza
+function criarGraficoDePizza(data) {
+  const ctx = document.getElementById('pieChart').getContext('2d');
+  if(chartPizza){
+    chartPizza.clear();
+    chartPizza.destroy();
+  }
+  chartPizza = new Chart(ctx, {
+    type: 'pie',
+    data: {
+      labels: data.labels,
+      datasets: [{
+        data: data.values,
+        backgroundColor: ["#5056BF", "#65A6FA", "#6D74F2", "#9B57CC", "#00CADC"],
+        borderColor: "#FFFFFF",
+        borderWidth: 2,
+      }]
+    }
+  });
 }
 
-function atualizarGrafico() {
-    if (!dadosCSV || dadosCSV.length < 2) {
-        console.error("Não há dados suficientes para criar o gráfico.");
-        return;
+// Gráfico de Linhas
+var chartLines = null;
+// Função para criar um gráfico de linhas
+function criarGraficoDeLinhas(data) {
+  const ctx = document.getElementById('lineChart').getContext('2d');
+  if(chartLines){
+    chartLines.clear();
+    chartLines.destroy();
+  }
+  chartLines = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: data.labels,
+      datasets: [{
+        label: 'Valores',
+        data: data.values,
+        fill: true, // Preencher área sob curvas
+        tension: 0.4, // Suavizar curvas
+        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+        borderColor: 'rgba(75, 192, 192, 1)',
+        borderWidth: 1
+      }]
     }
-    if (grafico) {
-        grafico.destroy();
+  });
+}
+// ...
+
+// Gráfico de Barras Horizontais
+var chartHorizontalBar = null;
+function criarGraficoDeBarrasHorizontais(data) {
+    const ctx = document.getElementById('horizontalBarChart').getContext('2d');
+    if (chartHorizontalBar) {
+        chartHorizontalBar.clear();
+        chartHorizontalBar.destroy();
     }
-
-    const rotulos = dadosCSV.slice(1).map(linha => linha[0]);
-    const dados = dadosCSV.slice(1).map(linha => parseFloat(linha[cabecalhos.indexOf(serieSelecionada)]));
-
-    grafico = new Chart(chartCanvas, {
-        type: selecaoTipoGrafico.value,
+    chartHorizontalBar = new Chart(ctx, {
+        type: 'horizontalBar',
         data: {
-            labels: rotulos,
+            labels: data.labels,
             datasets: [{
-                label: serieSelecionada,
-                data: dados,
+                label: 'Valores',
+                data: data.values,
                 backgroundColor: 'rgba(75, 192, 192, 0.2)',
                 borderColor: 'rgba(75, 192, 192, 1)',
                 borderWidth: 1
             }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                x: {
+                    beginAtZero: true // Opção para começar o Eixo X do Zero
+                }
+            }
         }
     });
 }
 
-function popularPreviaDados() {
-    const tabela = document.createElement('table');
-    const linhaCabecalho = document.createElement('tr');
-    
-    cabecalhos.forEach(cabecalho => {
-        const th = document.createElement('th');
-        th.textContent = cabecalho;
-        linhaCabecalho.appendChild(th);
-    });
-    
-    tabela.appendChild(linhaCabecalho);
+// Função para ler e adicionar o selecionar series 
+const addSelectOptions = (options) => {
+  options.forEach(option => {
+    const htmlOption = document.createElement('option');
+    htmlOption.value = option;
+    htmlOption.innerHTML = option;
+    document.getElementById('series').appendChild(htmlOption);
+  });
+}
 
-    const numLinhasExibicao = 5; // Defina o número desejado de linhas a serem exibidas
+// Função para analisar o arquivo CSV
+function analisarCSV(file) {
+  Papa.parse(file, {
+    header: true,
+    dynamicTyping: true,
+    complete: function (results) {
+      const raw_data = results.data;
+      data_csv = raw_data;
 
-    for (let i = 0; i < numLinhasExibicao && i < dadosCSV.length; i++) {
-        const linha = dadosCSV[i];
-        const linhaDados = document.createElement('tr');
-        
-        linha.forEach(celula => {
-            const td = document.createElement('td');
-            td.textContent = celula;
-            linhaDados.appendChild(td);
-        });
+      LABELS_CSV = Object.keys(raw_data[0]).filter((key) => key);
+      addSelectOptions(LABELS_CSV);
 
-        tabela.appendChild(linhaDados);
+      DATA_CSV[LABELS_CSV[0]] = [];
+      DATA_CSV[LABELS_CSV[1]] = [];
+      DATA_CSV[LABELS_CSV[2]] = [];
+      const labels = [];
+      for (const index in data_csv) {
+        const data = data_csv[index];
+        DATA_CSV[LABELS_CSV[0]].push(data[LABELS_CSV[0]]);
+        DATA_CSV[LABELS_CSV[1]].push(data[LABELS_CSV[1]]);
+        DATA_CSV[LABELS_CSV[2]].push(data[LABELS_CSV[2]]);
+        labels.push(data[LABELS_CSV[0]]);
+      }
+      DATA_CSV['labels'] = labels;
+      console.log(DATA_CSV);
     }
+  });
+}
 
-    const previaDados = document.getElementById('dataPreview');
-    previaDados.innerHTML = '';
-    previaDados.appendChild(tabela);
+// Evento de seleção de arquivo CSV
+document.getElementById('csvFile').addEventListener('change', function (e) {
+  const file = e.target.files[0];
+  if (file) analisarCSV(file);
+});
+
+
+// Função para exportar gráfico como imagem
+function exportarGrafico(chartId) {
+    const chartContainer = document.getElementById(chartId);
+    var chart = null;
+
+    if (chartId === 'barChart') chart = chartBar;
+    else if (chartId === 'pieChart') chart = chartPie;
+    else if (chartId === 'lineChart') chart = chartLines;
+    else if (chartId === 'horizontalBarChart') chart = chartHorizontalBar;
+
+    if (chart) {
+        var image = chart.toBase64Image();
+        const btnDownload = document.createElement('a');
+        btnDownload.href = image;
+        btnDownload.download = 'my_file_name.png';
+
+        // Trigger the download
+        btnDownload.click();
+    } else {
+        console.error('Gráfico não encontrado para o ID:', chartId);
+    }
 }
 
 
-function exportarGrafico() {
-    const imagem = chartCanvas.toDataURL('image/png');
-    const link = document.createElement('a');
-    link.href = imagem;
-    link.download = 'grafico.png';
-    link.click();
+
+// Evento para atualizar gráfico quando a série é selecionada
+document.getElementById('series').addEventListener('change', function (event) {
+  const series = document.getElementById('series');
+  const selectedValue = series.options[series.selectedIndex].text;
+  // Implemente a lógica para atualizar os gráficos com a série selecionada
+  // Você pode filtrar os dados e atualizar os gráficos de acordo com a série selecionada.
+  criarGraficoDeBarras({
+    labels: DATA_CSV.labels,
+    values: DATA_CSV[selectedValue]
+  });
+  criarGraficoDePizza({
+    labels: DATA_CSV.labels,
+    values: DATA_CSV[selectedValue]
+  });
+  criarGraficoDeLinhas({
+    labels: DATA_CSV.labels,
+    values: DATA_CSV[selectedValue]
+  });
+});
+
+// Função para empilhar séries em gráficos de barras
+function empilharSeries() {
+  // Implemente a lógica para empilhar séries nos gráficos de barras
 }
+
+// Evento para ativar ou desativar a opção de empilhar séries
+document.getElementById('empilharSeries').addEventListener('change', function () {
+  empilharSeries();
+})
