@@ -28,12 +28,12 @@
 
     <div class="container">
         <div class="sidebar">
-            <aside class="h-full" style="width: 300px; height: 525px; background-color: #9BB0E5; border-radius: 20px;">
+            <aside class="h-full" style="width: 300px; height: 600pxpx; background-color: #9BB0E5; border-radius: 20px;">
                 <div class="titulo-filtros">
                     <p>Filtros</p>
                 </div>
                 <label for="filtro">Filtrar por:</label>
-                <select id="filtro">
+                <select id="filtro" onchange="atualizarFiltrosEspecificos()">
                     <option value="cor_raca_etnia">Cor/Raça</option>
                     <option value="etapa_ensino">Etapa de Ensino</option>
                     <option value="genero">Gênero</option>
@@ -79,7 +79,6 @@
                 </div>
             </aside>
         </div>
-     <!-- ... Seu HTML anterior ... -->
     
         <div class="graficos">
            <div class="grafico" id="pizza">
