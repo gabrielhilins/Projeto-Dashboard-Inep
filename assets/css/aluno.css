@@ -57,10 +57,32 @@ header {
     text-align: center;
     color: #FFF;
     font-family: Poppins;
-    font-size: 36px;
+    font-size: 40px;
     font-style: normal;
     font-weight: 50%;
     line-height: normal;
+}
+hr{
+    
+        border: 0;
+        height: 2px;
+        background: #fff;
+        
+
+}
+
+a.download-link {
+    right: 50%;
+    font-size: 24px; 
+    color: blue; 
+    text-decoration: none; 
+    font-weight: bold; 
+    font-family: 'Roboto Mono', monospace;
+
+    transition: color 0.3s ease; 
+}
+a.download-link:hover {
+    color: green; 
 }
 
 
@@ -90,29 +112,19 @@ background: #D9D9D9;
 #idade,
 #raca,
 #genero {
+    
     margin-bottom: 15px;
     padding-bottom: 15px;
-    border-bottom: 2px solid #FFF; 
-}
-
-/* Estilizar o seletor de arquivo (input[type=file]) */
-.input input[type="file"] {
-    width: 100%;
-    margin-top: 5px;
-}
-
-hr{
     
-    border: 0;
-    height: 2px;
-    background: #fff;
-    
-
 }
+input{
+    color: #FFF;
+}
+
 /* Estilizar as etiquetas e seletores */
 label {
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 15px;
     color: #FFF; /* Texto branco */
 }
 
@@ -125,7 +137,8 @@ select {
     color: rgba(0, 0, 0, 0.45);
 }
 
-a {
+a { 
+    text-align: center;
     color: #FFF; 
     text-decoration: none;
 }
@@ -167,6 +180,11 @@ button {
     height: 25px;
     border-radius: 15px;
     background: #9BB0E5;
+    position: absolute;
+    top: 8px;
+    left: 5px;
+    margin: 2;
+    padding: 2;
 }
 
 
