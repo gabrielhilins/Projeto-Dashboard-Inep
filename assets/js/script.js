@@ -1,106 +1,101 @@
-let dadosCSV;
-let grafico;
-let serieSelecionada;
-let cabecalhos;
+function exportarGrafico(graficoId) {
+  var canvas = document.getElementById(graficoId);
+  var nomeDoGrafico = obterNomeDoGrafico(graficoId);
+  var dataUrl = canvas.toDataURL('image/png');
 
-const entradaArquivoCSV = document.getElementById('csvFile');
-const selecaoSeries = document.getElementById('series');
-const selecaoTipoGrafico = document.getElementById('chartType');
-const chartCanvas = document.getElementById('chartCanvas');
-
-entradaArquivoCSV.addEventListener('change', processarSelecaoArquivo);
-selecaoSeries.addEventListener('change', function () {
-    serieSelecionada = selecaoSeries.value;
-    atualizarGrafico();
-});
-
-function processarSelecaoArquivo(evento) {
-    const arquivo = evento.target.files[0];
-    Papa.parse(arquivo, {
-        complete: function (resultado) {
-            dadosCSV = resultado.data;
-            cabecalhos = dadosCSV[0];
-            popularSelecaoSeries();
-            serieSelecionada = cabecalhos[0];
-            popularPreviaDados();
-            atualizarGrafico(); 
-        }
-    });
+  // Cria um link temporário para download
+  var link = document.createElement('a');
+  link.href = dataUrl;
+  link.download = nomeDoGrafico + '.png';
+  
+  // Adiciona o link ao documento e simula o clique para iniciar o download
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
 }
 
-function popularSelecaoSeries() {
-    cabecalhos.forEach(cabecalho => {
-        const opcao = document.createElement('option');
-        opcao.value = cabecalho;
-        opcao.textContent = cabecalho;
-        selecaoSeries.appendChild(opcao);
-    });
+function obterNomeDoGrafico(graficoId) {
+  var nomes = {
+      'grafico-pizza': 'Grafico de Pizza',
+      'grafico-linha': 'Grafico de Linha',
+      'grafico-barra': 'Grafico de Barra',
+      'grafico-horizontal-bar': 'Grafico Horizontal de Barra'
+  };
+
+  return nomes[graficoId] || graficoId;
 }
 
-function atualizarGrafico() {
-    if (!dadosCSV || dadosCSV.length < 2) {
-        console.error("Não há dados suficientes para criar o gráfico.");
-        return;
-    }
-    if (grafico) {
-        grafico.destroy();
-    }
+function inicializarGraficos() {
+  // Gráfico de Pizza
+  new Chart(document.getElementById('grafico-pizza').getContext('2d'), {
+      type: 'pie',
+      data: {
+          labels: ['Norte', 'Nordeste', 'Centro Oeste', 'Sudeste', 'Sul'],
+          datasets: [{
+              label: 'qtd matriculados por regiao',
+              data: [20, 30, 35, 45, 40],
+              backgroundColor: ['#00BF63', '#FF914D', '#8D723D', '#A6A6A6', '#0047FF']
+          }]
+      }
+  });
 
-    const rotulos = dadosCSV.slice(1).map(linha => linha[0]);
-    const dados = dadosCSV.slice(1).map(linha => parseFloat(linha[cabecalhos.indexOf(serieSelecionada)]));
+  // Gráfico de Linha
+  new Chart(document.getElementById('grafico-linha').getContext('2d'), {
+      type: 'line',
+      data: {
+          labels: ['Norte', 'Nordeste', 'Centro Oeste', 'Sudeste', 'Sul'],
+          datasets: [{
+              label: 'qtd matriculados por regiao',
+              borderColor: '#ff6384',
+              data: [10, 25, 15, 30, 20]
+          }]
+      }
+  });
 
-    grafico = new Chart(chartCanvas, {
-        type: selecaoTipoGrafico.value,
-        data: {
-            labels: rotulos,
-            datasets: [{
-                label: serieSelecionada,
-                data: dados,
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                borderColor: 'rgba(75, 192, 192, 1)',
-                borderWidth: 1
-            }]
-        }
-    });
+  // Gráfico de Barra
+  new Chart(document.getElementById('grafico-barra').getContext('2d'), {
+      type: 'bar',
+      data: {
+          labels: ['Norte', 'Nordeste', 'Centro Oeste', 'Sudeste', 'Sul'],
+          datasets: [{
+              label: 'qtd matriculados por regiao',
+              backgroundColor: ['#00BF63', '#FF914D', '#8D723D', '#A6A6A6', '#0047FF'],
+              data: [10, 25, 15, 30, 20]
+          }]
+      }
+  });
+
+  // Gráfico de Barra Horizontal
+    new Chart(document.getElementById('grafico-horizontal-bar').getContext('2d'), {
+      type: 'bar',
+      data: {
+          labels: ['Norte', 'Nordeste', 'Centro Oeste', 'Sudeste', 'Sul'],
+          datasets: [{
+              label: 'qtd matriculados por regiao',
+              backgroundColor: ['#00BF63', '#FF914D', '#8D723D', '#A6A6A6', '#0047FF'],
+              data: [10, 25, 15, 30, 20]
+          }]
+      },
+      options: {
+          indexAxis: 'y',
+          elements: {
+              bar: {
+                  borderWidth: 2,
+              }
+          },
+          responsive: true,
+          plugins: {
+              legend: {
+                  position: 'bottom',
+              },
+              title: {
+                  display: true,
+                  text: 'Chart.js Vertical Bar Chart'
+              }
+          }
+      }
+  });
 }
 
-function popularPreviaDados() {
-    const tabela = document.createElement('table');
-    const linhaCabecalho = document.createElement('tr');
-    
-    cabecalhos.forEach(cabecalho => {
-        const th = document.createElement('th');
-        th.textContent = cabecalho;
-        linhaCabecalho.appendChild(th);
-    });
-    
-    tabela.appendChild(linhaCabecalho);
-
-    const numLinhasExibicao = 5; // Defina o número desejado de linhas a serem exibidas
-
-    for (let i = 0; i < numLinhasExibicao && i < dadosCSV.length; i++) {
-        const linha = dadosCSV[i];
-        const linhaDados = document.createElement('tr');
-        
-        linha.forEach(celula => {
-            const td = document.createElement('td');
-            td.textContent = celula;
-            linhaDados.appendChild(td);
-        });
-
-        tabela.appendChild(linhaDados);
-    }
-
-    const previaDados = document.getElementById('dataPreview');
-    previaDados.innerHTML = '';
-    previaDados.appendChild(tabela);
-}
-
-
-function exportarGrafico() {
-    const imagem = chartCanvas.toDataURL('image/png');
-    const link = document.createElement('a');
-    link.href = imagem;
-    link.download = 'grafico.png';
-    link.click();
-}
+// Chame a função de inicialização quando a página carregar
+window.onload = inicializarGraficos;
