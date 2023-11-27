@@ -24,16 +24,19 @@
             <img src="assets/img/inep.svg" alt="Imagem Logo INEP">
         </div>
     </header>
-    
+    <a href="assets/download/alunos.csv" download="aluno.csv" class="download-link">
+        Baixar Arquivo
+    </a>
     <div class="container">
         <div class="sidebar">
             <aside class=" h-full" style="width: 440px; height: 790px; background-color: #9BB0E5; border-radius: 20px;">
                 <div class="titulo-filtros">
                     <p>Filtros</p>
                 </div>
-                
+                <input type="file" id="csvFile" accept=".csv">
+                <hr>
                     <label for="escolaridade">Escolaridade</label>
-                    <select id="escolaridade">
+                    <select id="series">
                         <option value="ensino-basico">Ensino Básico</option>
                         <option value="ensino-fundamental">Ensino Fundamental</option>
                         <option value="ensino-medio">Ensino Médio</option>
@@ -60,7 +63,7 @@
                             });
                         });
                     </script>
-                    
+                    <hr>
                     <label for="raca">Raça</label>
                     <select id="raca">
                         <option value="amarelo">Amarelo</option>
@@ -80,21 +83,31 @@
         </div>
         <div class="graficos">
             <div class="grafico" id="pizza">
-                    <button>Exportar Gráfico</button>
+                <canvas id="pieChart"></canvas>
+                <div class = "button-container">
+                    <button onclick="exportarGrafico('pieChart')">Exportar Gráfico</button>
+                </div>
             </div>
             
         
             <div class="grafico" id="line">
-                    <button>Exportar Gráfico</button>
+                <canvas id="lineChart"></canvas>
+                <div class = "button-container">
+                    <button onclick="exportarGrafico('lineChart')">Exportar Gráfico</button>
+                </div>
             </div>
         
             <div class="grafico" id="bar">
-                    <button>Exportar Gráfico</button>
+                <canvas id="barChart"></canvas>
+                <div class = "button-container">
+                    <button onclick="exportarGrafico('barChart')">Exportar Gráfico</button>
+                </div> 
             </div>
         
             <div class="grafico" id="horizontal-bar">
+                <canvas id="horizontalBarChart"></canvas>
                 <div class="button-container">
-                    <button>Exportar Gráfico</button>
+                    <button onclick="exportarGrafico('horizontalBarChart')">Exportar Gráfico</button>
                 </div>
             </div>
         </div>
@@ -113,5 +126,8 @@
             </div>
         </div>
     </footer>
+    
+    <script src="script.js"></script>
+
 </body>
-</html>
+</html> 
