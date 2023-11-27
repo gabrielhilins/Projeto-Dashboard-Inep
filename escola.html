@@ -15,20 +15,20 @@
     <header>
         <div class="home">
             <a href="index.html">
-                <img src="assets/img/silhueta-de-icone-de-casa 2.png" alt="botao home">
+                <img src="assets/img/silhueta-de-icone-de-casa 2.png" alt="botao home" width="28px" height="28px">
         </a>
         </div>
         <div class="titulo">
             <h1>Dashboard de Gestão Educacional 2022 | Escolas</h1>
         </div>
         <div class="logo">
-            <img src="assets/img/inep.svg" alt="Imagem Logo INEP">
+            <img src="assets/img/inep.svg" alt="Imagem Logo INEP" width="100px" height="100px">
         </div>
     </header>
     
     <div class="container">
         <div class="sidebar">
-            <aside class=" h-full" style="width: 440px; height: 790px; background-color: #9BB0E5; border-radius: 20px;">
+            <aside class=" h-full" style="width: 300px; height: 450px; background-color: #9BB0E5; border-radius: 20px;">
                 <div class="titulo-filtros">
                     <p>Filtros</p>
                 </div>
@@ -93,22 +93,25 @@
         </div>
         <div class="graficos">
             <div class="grafico" id="pizza">
-                    <button>Exportar Gráfico</button>
-            </div>
-            
-            <div class="grafico" id="line">
-                    <button>Exportar Gráfico</button>
-            </div>
-        
-            <div class="grafico" id="bar">
-                    <button>Exportar Gráfico</button>
-            </div>
-        
-            <div class="grafico" id="horizontal-bar">
-                <div class="button-container">
-                    <button>Exportar Gráfico</button>
-                </div>
-            </div>
+                 <button onclick="exportarGrafico('grafico-pizza')">Exportar Gráfico</button>
+                 <canvas id="grafico-pizza"></canvas>
+     </div>
+     
+     <div class="grafico" id="line">
+         <button onclick="exportarGrafico('grafico-linha')">Exportar Gráfico</button>
+         <canvas id="grafico-linha"></canvas>
+     </div>
+ 
+     <div class="grafico" id="bar">
+         <button onclick="exportarGrafico('grafico-barra')">Exportar Gráfico</button>
+         <canvas id="grafico-barra"></canvas>
+     </div>
+ 
+     <div class="grafico" id="horizontal-bar">
+         <button onclick="exportarGrafico('grafico-horizontal-bar')">Exportar Gráfico</button>
+         <canvas id="grafico-horizontal-bar"></canvas>
+     </div>
+ </div>
         </div>
     </div>
     <footer class="footer">
