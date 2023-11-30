@@ -1,101 +1,174 @@
-function exportarGrafico(graficoId) {
-  var canvas = document.getElementById(graficoId);
-  var nomeDoGrafico = obterNomeDoGrafico(graficoId);
-  var dataUrl = canvas.toDataURL('image/png');
+document.addEventListener('DOMContentLoaded', async () => {
+  // Inicializa os gráficos quando a página carrega
+  inicializarGraficos();
 
-  // Cria um link temporário para download
-  var link = document.createElement('a');
-  link.href = dataUrl;
-  link.download = nomeDoGrafico + '.png';
-  
-  // Adiciona o link ao documento e simula o clique para iniciar o download
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-}
+  // Obtém os dados do servidor ao carregar a página
+  try {
+    // Obtém dados padrão ao carregar a página
+    const responsePadrao = await fetch('/dados/total-alunos');
+    const dadosPadrao = await responsePadrao.json();
+    atualizarGraficos(dadosPadrao);
 
-function obterNomeDoGrafico(graficoId) {
-  var nomes = {
-      'grafico-pizza': 'Grafico de Pizza',
-      'grafico-linha': 'Grafico de Linha',
-      'grafico-barra': 'Grafico de Barra',
-      'grafico-horizontal-bar': 'Grafico Horizontal de Barra'
-  };
+    // Obtém os dados do servidor para os filtros
+    const response = await fetch('/dados');
+    const dados = await response.json();
 
-  return nomes[graficoId] || graficoId;
-}
+    // Atualiza os gráficos com os dados do servidor
+    atualizarGraficos(dados);
 
-function inicializarGraficos() {
-  // Gráfico de Pizza
-  new Chart(document.getElementById('grafico-pizza').getContext('2d'), {
+    // Adiciona evento para aplicar filtros quando houver mudança no seletor
+    const filtroPrincipal = document.getElementById('filtro');
+    filtroPrincipal.addEventListener('change', aplicarFiltros);
+
+  } catch (error) {
+    console.error('Erro ao inicializar a página:', error);
+  }
+});
+
+// Função para inicializar os gráficos
+async function inicializarGraficos() {
+  try {
+    // Gráfico de Pizza
+    const pizzaResponse = await fetch('./dados/total-alunos');
+    const pizzaDados = await pizzaResponse.json();
+
+    new Chart(document.getElementById('grafico-pizza').getContext('2d'), {
       type: 'pie',
       data: {
-          labels: ['Norte', 'Nordeste', 'Centro Oeste', 'Sudeste', 'Sul'],
-          datasets: [{
-              label: 'qtd matriculados por regiao',
-              data: [20, 30, 35, 45, 40],
-              backgroundColor: ['#00BF63', '#FF914D', '#8D723D', '#A6A6A6', '#0047FF']
-          }]
+        labels: pizzaDados.map(item => item.regiao),
+        datasets: [{
+          label: 'Total de matriculados no Ensino Básico por Região',
+          data: pizzaDados.map(item => item.totalAlunos),
+          backgroundColor: ['#00BF63', '#FF914D', '#8D723D', '#A6A6A6', '#0047FF']
+        }]
       }
-  });
+    });
 
-  // Gráfico de Linha
-  new Chart(document.getElementById('grafico-linha').getContext('2d'), {
+    // Gráfico de Linha
+    const linhaResponse = await fetch('/dados/total-alunos');
+    const linhaDados = await linhaResponse.json();
+
+    new Chart(document.getElementById('grafico-linha').getContext('2d'), {
       type: 'line',
       data: {
-          labels: ['Norte', 'Nordeste', 'Centro Oeste', 'Sudeste', 'Sul'],
-          datasets: [{
-              label: 'qtd matriculados por regiao',
-              borderColor: '#ff6384',
-              data: [10, 25, 15, 30, 20]
-          }]
+        labels: linhaDados.map(item => item.regiao),
+        datasets: [{
+          label: 'Total de matriculados no Ensino Básico por Região',
+          borderColor: '#ff6384',
+          data: linhaDados.map(item => item.totalAlunos)
+        }]
       }
-  });
+    });
 
-  // Gráfico de Barra
-  new Chart(document.getElementById('grafico-barra').getContext('2d'), {
+    // Gráfico de Barra
+    const barraResponse = await fetch('/dados/total-alunos');
+    const barraDados = await barraResponse.json();
+
+    new Chart(document.getElementById('grafico-barra').getContext('2d'), {
       type: 'bar',
       data: {
-          labels: ['Norte', 'Nordeste', 'Centro Oeste', 'Sudeste', 'Sul'],
-          datasets: [{
-              label: 'qtd matriculados por regiao',
-              backgroundColor: ['#00BF63', '#FF914D', '#8D723D', '#A6A6A6', '#0047FF'],
-              data: [10, 25, 15, 30, 20]
-          }]
+        labels: barraDados.map(item => item.regiao),
+        datasets: [{
+          label: 'Total de matriculados no Ensino Básico por Região',
+          backgroundColor: ['#00BF63', '#FF914D', '#8D723D', '#A6A6A6', '#0047FF'],
+          data: barraDados.map(item => item.totalAlunos)
+        }]
       }
-  });
+    });
 
-  // Gráfico de Barra Horizontal
+    // Gráfico de Barra Horizontal
+    const barraHorizontalResponse = await fetch('/dados/total-alunos');
+    const barraHorizontalDados = await barraHorizontalResponse.json();
+
     new Chart(document.getElementById('grafico-horizontal-bar').getContext('2d'), {
       type: 'bar',
       data: {
-          labels: ['Norte', 'Nordeste', 'Centro Oeste', 'Sudeste', 'Sul'],
-          datasets: [{
-              label: 'qtd matriculados por regiao',
-              backgroundColor: ['#00BF63', '#FF914D', '#8D723D', '#A6A6A6', '#0047FF'],
-              data: [10, 25, 15, 30, 20]
-          }]
+        labels: barraHorizontalDados.map(item => item.regiao),
+        datasets: [{
+          label: 'Total de matriculados no Ensino Básico por Região',
+          backgroundColor: ['#00BF63', '#FF914D', '#8D723D', '#A6A6A6', '#0047FF'],
+          data: barraHorizontalDados.map(item => item.totalAlunos)
+        }]
       },
       options: {
-          indexAxis: 'y',
-          elements: {
-              bar: {
-                  borderWidth: 2,
-              }
-          },
-          responsive: true,
-          plugins: {
-              legend: {
-                  position: 'bottom',
-              },
-              title: {
-                  display: true,
-                  text: 'Chart.js Vertical Bar Chart'
-              }
+        indexAxis: 'y',
+        elements: {
+          bar: {
+            borderWidth: 2,
           }
+        },
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'bottom',
+          },
+          title: {
+            display: true,
+            text: 'Chart.js Vertical Bar Chart'
+          }
+        }
       }
-  });
+    });
+
+  } catch (error) {
+    console.error('Erro ao inicializar os gráficos:', error);
+  }
+}
+window.onload = inicializarGraficos;
+
+
+// Função para atualizar os gráficos com dados do servidor
+function atualizarGraficos(dados) {
+  // Atualizar o gráfico de Pizza com novos dados
+  atualizarGraficoPizza(dados);
+
+  // Atualizar o gráfico de Linha com novos dados
+  atualizarGraficoLinha(dados);
+
+  // Atualizar o gráfico de Barra com novos dados
+  atualizarGraficoBarra(dados);
+
+  // Atualizar o gráfico de Barra Horizontal com novos dados
+  atualizarGraficoBarraHorizontal(dados);
 }
 
-// Chame a função de inicialização quando a página carregar
-window.onload = inicializarGraficos;
+// Função para atualizar o gráfico de Pizza
+function atualizarGraficoPizza(dados) {
+  // (seu código existente para atualizar o gráfico de pizza com os novos dados)
+}
+
+// Função para atualizar o gráfico de Linha
+function atualizarGraficoLinha(dados) {
+  // (seu código existente para atualizar o gráfico de linha com os novos dados)
+}
+
+// Função para atualizar o gráfico de Barra
+function atualizarGraficoBarra(dados) {
+  // (seu código existente para atualizar o gráfico de barra com os novos dados)
+}
+
+// Função para atualizar o gráfico de Barra Horizontal
+function atualizarGraficoBarraHorizontal(dados) {
+  // (seu código existente para atualizar o gráfico de barra horizontal com os novos dados)
+}
+
+// Função para aplicar filtros aos gráficos
+async function aplicarFiltros() {
+  const filtroPrincipal = document.getElementById('filtro');
+  const filtrosEspecificos = document.getElementById('filtros-especificos');
+
+  // Lógica para aplicar filtros conforme necessário
+  // ...
+
+  try {
+    // Obtém os dados filtrados do servidor
+    const filtroSelecionado = filtroPrincipal.value;
+    const responseFiltro = await fetch(`/dados/${filtroSelecionado}`);
+    const dadosFiltrados = await responseFiltro.json();
+
+    // Atualiza os gráficos com os dados filtrados
+    atualizarGraficos(dadosFiltrados);
+  } catch (error) {
+    console.error('Erro ao aplicar filtros:', error);
+  }
+}
