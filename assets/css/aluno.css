@@ -81,13 +81,13 @@ aside {
     background: #D9D9D9;
 }
 
-#etapa_ensino,
+#estado,
 #idade,
 #cor_raca_etnia,
 #genero {
     margin-bottom: 15px;
     padding-bottom: 15px;
-    
+    border-bottom: 2px solid #FFF; 
 }
 
 .input input[type="file"] {
@@ -162,6 +162,12 @@ button {
     border-radius: 15px;
     background: #9BB0E5;
     color: #FFF;
+}
+
+.buttons-filtros {
+    display: flex;
+    flex-direction: row;
+    padding: 20px;
 }
 
 
