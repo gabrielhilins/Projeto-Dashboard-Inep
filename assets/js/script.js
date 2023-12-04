@@ -1,93 +1,96 @@
-document.addEventListener('DOMContentLoaded', async () => {
-  // Inicializa os gráficos quando a página carrega
-  inicializarGraficos();
-
-  // Obtém os dados do servidor ao carregar a página
+async function iniciar() {
   try {
-    // Obtém dados padrão ao carregar a página
-    const responsePadrao = await fetch('/dados/total-alunos');
-    const dadosPadrao = await responsePadrao.json();
+    // Dados padrão ou outros dados iniciais
+    const dadosPadrao = await obterDados(`/dados`);
+
+    // Chamar a função para atualizar os gráficos com os dados iniciais
     atualizarGraficos(dadosPadrao);
-
-    // Obtém os dados do servidor para os filtros
-    const response = await fetch('/dados');
-    const dados = await response.json();
-
-    // Atualiza os gráficos com os dados do servidor
-    atualizarGraficos(dados);
-
-    // Adiciona evento para aplicar filtros quando houver mudança no seletor
-    const filtroPrincipal = document.getElementById('filtro');
-    filtroPrincipal.addEventListener('change', aplicarFiltros);
-
   } catch (error) {
-    console.error('Erro ao inicializar a página:', error);
+    console.error('Erro ao iniciar:', error);
   }
-});
+}
+// Chame a função de inicialização
+iniciar();
 
-// Função para inicializar os gráficos
-async function inicializarGraficos() {
+async function aplicarFiltros() {
+  try {
+    const filtroSelecionado = document.getElementById('filtro').value;
+    let filtroEspecifico;
+
+    switch (filtroSelecionado) {
+      case 'etapa_ensino':
+        filtroEspecifico = document.getElementById('etapa_ensinoSelect').value;
+        break;
+      case 'idade':
+        filtroEspecifico = document.getElementById('idadeSelect').value;
+        break;
+      case 'cor_raca_etnia':
+        filtroEspecifico = document.getElementById('cor_raca_etniaSelect').value;
+      case 'genero':
+        filtroEspecifico = document.getElementById('generoSelect').value;
+      default:
+        break;
+    }
+
+    // Obter os dados específicos com base nas opções selecionadas
+    const dadosEspecificos = await obterDados(`/dados/${filtroSelecionado}/${filtroEspecifico}`);
+    // Atualizar os gráficos com os dados específicos
+    atualizarGraficos(dadosEspecificos);
+  } catch (error) {
+    console.error('Erro ao aplicar filtros:', error);
+  }
+}
+
+function atualizarGraficos(dados) {
   try {
     // Gráfico de Pizza
-    const pizzaResponse = await fetch('./dados/total-alunos');
-    const pizzaDados = await pizzaResponse.json();
-
     new Chart(document.getElementById('grafico-pizza').getContext('2d'), {
       type: 'pie',
       data: {
-        labels: pizzaDados.map(item => item.regiao),
+        labels: dados.map(item => item.regiao),
         datasets: [{
-          label: 'Total de matriculados no Ensino Básico por Região',
-          data: pizzaDados.map(item => item.totalAlunos),
+          label: 'Quantidade de matriculados por Região',
+          data: dados.map(item => item.total),
           backgroundColor: ['#00BF63', '#FF914D', '#8D723D', '#A6A6A6', '#0047FF']
         }]
       }
     });
 
     // Gráfico de Linha
-    const linhaResponse = await fetch('/dados/total-alunos');
-    const linhaDados = await linhaResponse.json();
-
     new Chart(document.getElementById('grafico-linha').getContext('2d'), {
       type: 'line',
       data: {
-        labels: linhaDados.map(item => item.regiao),
+        labels: dados.map(item => item.regiao),
         datasets: [{
-          label: 'Total de matriculados no Ensino Básico por Região',
+          label: 'Quantidade de matriculados por Região',
           borderColor: '#ff6384',
-          data: linhaDados.map(item => item.totalAlunos)
+          data: dados.map(item => item.total)
         }]
       }
     });
 
     // Gráfico de Barra
-    const barraResponse = await fetch('/dados/total-alunos');
-    const barraDados = await barraResponse.json();
-
     new Chart(document.getElementById('grafico-barra').getContext('2d'), {
       type: 'bar',
       data: {
-        labels: barraDados.map(item => item.regiao),
+        labels: dados.map(item => item.regiao),
         datasets: [{
-          label: 'Total de matriculados no Ensino Básico por Região',
+          label: 'Quantidade de matriculados por Região',
           backgroundColor: ['#00BF63', '#FF914D', '#8D723D', '#A6A6A6', '#0047FF'],
-          data: barraDados.map(item => item.totalAlunos)
+          data: dados.map(item => item.totalAlunos)
         }]
       }
     });
 
     // Gráfico de Barra Horizontal
-    const barraHorizontalResponse = await fetch('/dados/total-alunos');
-    const barraHorizontalDados = await barraHorizontalResponse.json();
-
     new Chart(document.getElementById('grafico-horizontal-bar').getContext('2d'), {
       type: 'bar',
       data: {
-        labels: barraHorizontalDados.map(item => item.regiao),
+        labels: dados.map(item => item.regiao),
         datasets: [{
-          label: 'Total de matriculados no Ensino Básico por Região',
+          label: 'Quantidade de matriculados por Região',
           backgroundColor: ['#00BF63', '#FF914D', '#8D723D', '#A6A6A6', '#0047FF'],
-          data: barraHorizontalDados.map(item => item.totalAlunos)
+          data: dados.map(item => item.totalAlunos)
         }]
       },
       options: {
@@ -109,66 +112,7 @@ async function inicializarGraficos() {
         }
       }
     });
-
   } catch (error) {
-    console.error('Erro ao inicializar os gráficos:', error);
-  }
-}
-window.onload = inicializarGraficos;
-
-
-// Função para atualizar os gráficos com dados do servidor
-function atualizarGraficos(dados) {
-  // Atualizar o gráfico de Pizza com novos dados
-  atualizarGraficoPizza(dados);
-
-  // Atualizar o gráfico de Linha com novos dados
-  atualizarGraficoLinha(dados);
-
-  // Atualizar o gráfico de Barra com novos dados
-  atualizarGraficoBarra(dados);
-
-  // Atualizar o gráfico de Barra Horizontal com novos dados
-  atualizarGraficoBarraHorizontal(dados);
-}
-
-// Função para atualizar o gráfico de Pizza
-function atualizarGraficoPizza(dados) {
-  // (seu código existente para atualizar o gráfico de pizza com os novos dados)
-}
-
-// Função para atualizar o gráfico de Linha
-function atualizarGraficoLinha(dados) {
-  // (seu código existente para atualizar o gráfico de linha com os novos dados)
-}
-
-// Função para atualizar o gráfico de Barra
-function atualizarGraficoBarra(dados) {
-  // (seu código existente para atualizar o gráfico de barra com os novos dados)
-}
-
-// Função para atualizar o gráfico de Barra Horizontal
-function atualizarGraficoBarraHorizontal(dados) {
-  // (seu código existente para atualizar o gráfico de barra horizontal com os novos dados)
-}
-
-// Função para aplicar filtros aos gráficos
-async function aplicarFiltros() {
-  const filtroPrincipal = document.getElementById('filtro');
-  const filtrosEspecificos = document.getElementById('filtros-especificos');
-
-  // Lógica para aplicar filtros conforme necessário
-  // ...
-
-  try {
-    // Obtém os dados filtrados do servidor
-    const filtroSelecionado = filtroPrincipal.value;
-    const responseFiltro = await fetch(`/dados/${filtroSelecionado}`);
-    const dadosFiltrados = await responseFiltro.json();
-
-    // Atualiza os gráficos com os dados filtrados
-    atualizarGraficos(dadosFiltrados);
-  } catch (error) {
-    console.error('Erro ao aplicar filtros:', error);
+    console.error('Erro ao atualizar os gráficos:', error);
   }
 }
