@@ -88,7 +88,7 @@ background: #D9D9D9;
 #internet {
     margin-bottom: 15px;
     padding-bottom: 15px;
- 
+    border-bottom: 2px solid #FFF; 
 }
 
 .input input[type="file"] {
@@ -124,6 +124,13 @@ a {
 
 a:hover {
     text-decoration: underline;
+}
+
+.buttons-filtros {
+    display: flex;
+    flex-direction: row;
+    padding-top: 40px;
+    padding-left: 10px;
 }
 
 
