@@ -28,11 +28,11 @@
     
     <div class="container">
         <div class="sidebar">
-            <aside class=" h-full" style="width: 320px; height: 650px; background-color: #9BB0E5; border-radius: 20px;">
+            <aside class=" h-full" style="width: 300px; height: 700px; background-color: #9BB0E5; border-radius: 20px;">
                 <div class="titulo-filtros">
                     <p>Filtros</p>
                 </div>
-                <hr>
+                
                     <label for="estados">Estados</label>
                     <select id="estados">
                         <option value="AC">Acre</option>
@@ -78,7 +78,7 @@
                         <option value="inativa">Inativa</option>
                         <option value="paralisada">Paralisada</option>
                     </select>
-<hr>
+                    <hr>
                     <label for="localizacao">Localização</label>
                     <select id="localizacao">
                         <option value="urbano">Urbano</option>
@@ -89,7 +89,15 @@
                     <select id="internet">
                         <option value="possui-acesso">Possui Acesso</option>
                         <option value="nao-possui-acesso">Não possui acesso</option>
-                    </select>    
+                    </select>   
+                    <div class="buttons-filtros">
+                        <div class="aplicar-filtros">
+                            <button onclick="aplicarFiltros()">Aplicar Filtros</button>
+                        </div>
+                        <div class="limpar-filtros">
+                            <button onclick="limparFiltros()">Limpar Filtros</button>
+                        </div>
+                    </div> 
             </aside>
         </div>
         <div class="graficos">
