@@ -1,101 +1,99 @@
-function exportarGrafico(graficoId) {
-    var canvas = document.getElementById(graficoId);
-    var nomeDoGrafico = obterNomeDoGrafico(graficoId);
-    var dataUrl = canvas.toDataURL('image/png');
-  
-    // Cria um link temporário para download
-    var link = document.createElement('a');
-    link.href = dataUrl;
-    link.download = nomeDoGrafico + '.png';
-    
-    // Adiciona o link ao documento e simula o clique para iniciar o download
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-}
+// Adicione esta linha no início do seu arquivo
+let chartInstances = {};
 
-function obterNomeDoGrafico(graficoId) {
-    var nomes = {
-        'grafico-pizza': 'Grafico de Pizza',
-        'grafico-linha': 'Grafico de Linha',
-        'grafico-barra': 'Grafico de Barra',
-        'grafico-horizontal-bar': 'Grafico Horizontal de Barra'
-    };
+function inserirGraficoTotalBasico(dadosPadrao) {
+  // Gráfico de Pizza
+  chartInstances['grafico-pizza'] = new Chart(document.getElementById('grafico-pizza').getContext('2d'), {
+    type: 'pie',
+    data: {
+      labels: ['Nordeste', 'Norte', 'Centro-Oeste', 'Sudeste', 'Sul'],
+      datasets: [{
+        label: 'Número de escolas por regiao',
+        data: [26086,  80710, 12198, 76461, 29194],
+        backgroundColor: ['#FF914D', '#00BF63', '#8D723D', '#A6A6A6', '#0047FF']
+      }]
+    }
+  });
 
-    return nomes[graficoId] || graficoId;
-}
-  
-  function inicializarGraficos() {
-    // Gráfico de Pizza
-    new Chart(document.getElementById('grafico-pizza').getContext('2d'), {
-        type: 'pie',
-        data: {
-            labels: ['Norte', 'Nordeste', 'Centro Oeste', 'Sudeste', 'Sul'],
-            datasets: [{
-                label: 'qtd matriculados por regiao',
-                data: [20, 30, 35, 45, 40],
-                backgroundColor: ['#00BF63', '#FF914D', '#8D723D', '#A6A6A6', '#0047FF']
-            }]
+  // Gráfico de Linha
+  chartInstances['grafico-linha'] = new Chart(document.getElementById('grafico-linha').getContext('2d'), {
+    type: 'line',
+    data: {
+      labels: ['Nordeste', 'Norte', 'Centro-Oeste', 'Sudeste', 'Sul'],
+      datasets: [{
+        label: 'Número de escolas por regiao',
+        borderColor: '#ff6384',
+        data: [26086,  80710, 12198, 76461, 29194]
+      }]
+    }
+  });
+
+  // Gráfico de Barra
+  chartInstances['grafico-barra'] = new Chart(document.getElementById('grafico-barra').getContext('2d'), {
+    type: 'bar',
+    data: {
+      labels: ['Nordeste', 'Norte', 'Centro-Oeste', 'Sudeste', 'Sul'],
+      datasets: [{
+        label: 'Número de escolas por regiao',
+        backgroundColor: ['#FF914D', '#00BF63', '#8D723D', '#A6A6A6', '#0047FF'],
+        data: [26086,  80710, 12198, 76461, 29194]
+      }]
+    }
+  });
+
+  // Gráfico de Barra Horizontal
+  chartInstances['grafico-horizontal-bar'] = new Chart(document.getElementById('grafico-horizontal-bar').getContext('2d'), {
+    type: 'bar',
+    data: {
+      labels: ['Nordeste', 'Norte', 'Centro-Oeste', 'Sudeste', 'Sul'],
+      datasets: [{
+        label: 'Número de escolas por regiao',
+        backgroundColor: ['#FF914D', '#00BF63', '#8D723D', '#A6A6A6', '#0047FF'],
+        data: [26086,  80710, 12198, 76461, 29194]
+      }]
+    },
+    options: {
+      indexAxis: 'y',
+      elements: {
+        bar: {
+          borderWidth: 2,
         }
-    });
-  
-    // Gráfico de Linha
-    new Chart(document.getElementById('grafico-linha').getContext('2d'), {
-        type: 'line',
-        data: {
-            labels: ['Norte', 'Nordeste', 'Centro Oeste', 'Sudeste', 'Sul'],
-            datasets: [{
-                label: 'qtd matriculados por regiao',
-                borderColor: '#ff6384',
-                data: [10, 25, 15, 30, 20]
-            }]
-        }
-    });
-  
-    // Gráfico de Barra
-    new Chart(document.getElementById('grafico-barra').getContext('2d'), {
-        type: 'bar',
-        data: {
-            labels: ['Norte', 'Nordeste', 'Centro Oeste', 'Sudeste', 'Sul'],
-            datasets: [{
-                label: 'qtd matriculados por regiao',
-                backgroundColor: ['#00BF63', '#FF914D', '#8D723D', '#A6A6A6', '#0047FF'],
-                data: [10, 25, 15, 30, 20]
-            }]
-        }
-    });
-  
-    // Gráfico de Barra Horizontal
-      new Chart(document.getElementById('grafico-horizontal-bar').getContext('2d'), {
-        type: 'bar',
-        data: {
-            labels: ['Norte', 'Nordeste', 'Centro Oeste', 'Sudeste', 'Sul'],
-            datasets: [{
-                label: 'qtd matriculados por regiao',
-                backgroundColor: ['#00BF63', '#FF914D', '#8D723D', '#A6A6A6', '#0047FF'],
-                data: [10, 25, 15, 30, 20]
-            }]
+      },
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'bottom',
         },
-        options: {
-            indexAxis: 'y',
-            elements: {
-                bar: {
-                    borderWidth: 2,
-                }
-            },
-            responsive: true,
-            plugins: {
-                legend: {
-                    position: 'bottom',
-                },
-                title: {
-                    display: true,
-                    text: 'Chart.js Vertical Bar Chart'
-                }
-            }
+        title: {
+          display: true,
+          text: 'Chart.js Vertical Bar Chart'
         }
-    });
-  }
-  
-  // Chame a função de inicialização quando a página carregar
-  window.onload = inicializarGraficos;
+      }
+    }
+  });
+}
+
+window.onload = function () {
+  inserirGraficoTotalBasico();
+};
+
+function limparFiltros() {
+  // Lógica para limpar os filtros
+  document.getElementById('filtro').value = '';
+  document.getElementById('etapa_ensinoSelect').value = '';
+  document.getElementById('idadeSelect').value = '';
+  document.getElementById('cor_raca_etniaSelect').value = '';
+  document.getElementById('generoSelect').value = '';
+
+  // Chama a função iniciar para reexibir os gráficos iniciais
+  inserirGraficoTotalBasico();
+}
+
+function exportarGrafico(id) {
+  const chartCanvas = chartInstances[id].canvas;
+  const imagem = chartCanvas.toDataURL('image/png');
+  const link = document.createElement('a');
+  link.href = imagem;
+  link.download = 'grafico.png';
+  link.click();
+}
