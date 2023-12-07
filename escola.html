@@ -25,81 +25,73 @@
             <img src="assets/img/inep.svg" alt="Imagem Logo INEP" width="100px" height="100px">
         </div>
     </header>
-    
     <div class="container">
         <div class="sidebar">
-            <aside class=" h-full" style="width: 300px; height: 700px; background-color: #9BB0E5; border-radius: 20px;">
+            <aside class="h-full" style="width: 300px; height: 600px; background-color: #9BB0E5; border-radius: 20px;">
                 <div class="titulo-filtros">
                     <p>Filtros</p>
                 </div>
+                <label for="filtro">Filtrar por:</label>
+                <select id="filtro">
+                    <option value="dependencia">Dependência</option>
+                    <option value="situacao">Situação</option>
+                    <option value="localizacao">Localização</option>
+                    <option value="internet">Internet</option>
+                </select>
+                <hr>
+                <div id="filtros-especificos">
+                    <!-- Opções de Dependência -->
+                    <div id="dependencia">
+                        <label for="dependencia">Dependência</label>
+                        <select id="dependenciaSelect">
+                            <option value="Estadual">Estadual</option>
+                            <option value="Federal">Federal</option>
+                            <option value="Municipal">Municipal</option>
+                            <option value="Privada">Privada</option>
+                        </select>
+                        <hr>
+                    </div>
+                    <!-- Opções de Situacao Funcionamento -->
+                    <div id="situacaoContainer">
+                        <label for="situacao">Situação</label>
+                        <select id="situacaoSelect">
+                            <option value="Em-atividade">Em Atividade</option>
+                            <option value="Inativa">Inativa</option>
+                            <option value="Paralisada">Paralisada</option>
+                        </select>
+                        <hr>
+                    </div>
+                    <!-- Opções de Localizacao -->
+                    <div id="localizacaoContainer">
+                        <label for="localizacao">Localização</label>
+                        <select id="localizacaoSelect">
+                            <option value="Urbano">Urbano</option>
+                            <option value="Rural">Rural</option>
+                        </select>
+                        <hr>
+                    </div>
+                    <!-- Opções de Internet -->
+                    <div id="internetContainer">
+                        <label for="internet">Internet</label>
+                        <select id="internetSelect">
+                            <option value="Possui-acesso">Possui Acesso</option>
+                            <option value="Nao-possui-acesso">Não possui acesso</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="buttons-filtros">
+                    <div class="aplicar-filtros">
+                        <button onclick="aplicarFiltros()">Aplicar Filtros</button>
+                    </div>
+                    <div class="limpar-filtros">
+                        <button onclick="limparFiltros()">Limpar Filtros</button>
+                    </div>
+                </div>
                 
-                    <label for="estados">Estados</label>
-                    <select id="estados">
-                        <option value="AC">Acre</option>
-                        <option value="AL">Alagoas</option>
-                        <option value="AP">Amapá</option>
-                        <option value="AM">Amazonas</option>
-                        <option value="BA">Bahia</option>
-                        <option value="CE">Ceará</option>
-                        <option value="DF">Distrito Federal</option>
-                        <option value="ES">Espírito Santo</option>
-                        <option value="GO">Goiás</option>
-                        <option value="MA">Maranhão</option>
-                        <option value="MT">Mato Grosso</option>
-                        <option value="MS">Mato Grosso do Sul</option>
-                        <option value="MG">Minas Gerais</option>
-                        <option value="PA">Pará</option>
-                        <option value="PB">Paraíba</option>
-                        <option value="PR">Paraná</option>
-                        <option value="PE">Pernambuco</option>
-                        <option value="PI">Piauí</option>
-                        <option value="RJ">Rio de Janeiro</option>
-                        <option value="RN">Rio Grande do Norte</option>
-                        <option value="RS">Rio Grande do Sul</option>
-                        <option value="RO">Rondônia</option>
-                        <option value="RR">Roraima</option>
-                        <option value="SC">Santa Catarina</option>
-                        <option value="SP">São Paulo</option>
-                        <option value="SE">Sergipe</option>
-                        <option value="TO">Tocantins</option>
-                    </select>
-                    <hr>
-                    <label for="dependencia">Dependência:</label>
-                    <select id="dependencia">
-                        <option value="estadual">Estadual</option>
-                        <option value="federal">Federal</option>
-                        <option value="municipal">Municipal</option>
-                        <option value="privada">Privada</option>
-                    </select>
-                    <hr>
-                    <label for="situacao">Situação</label>
-                    <select id="situacao">
-                        <option value="em-atividade">Em Atividade</option>
-                        <option value="inativa">Inativa</option>
-                        <option value="paralisada">Paralisada</option>
-                    </select>
-                    <hr>
-                    <label for="localizacao">Localização</label>
-                    <select id="localizacao">
-                        <option value="urbano">Urbano</option>
-                        <option value="rural">Rural</option>
-                    </select>
-                    <hr>
-                    <label for="internet">Internet</label>
-                    <select id="internet">
-                        <option value="possui-acesso">Possui Acesso</option>
-                        <option value="nao-possui-acesso">Não possui acesso</option>
-                    </select>   
-                    <div class="buttons-filtros">
-                        <div class="aplicar-filtros">
-                            <button onclick="aplicarFiltros()">Aplicar Filtros</button>
-                        </div>
-                        <div class="limpar-filtros">
-                            <button onclick="limparFiltros()">Limpar Filtros</button>
-                        </div>
-                    </div> 
             </aside>
         </div>
+    
         <div class="graficos">
             <div class="grafico" id="pizza">
                  <button onclick="exportarGrafico('grafico-pizza')">Exportar Gráfico</button>
