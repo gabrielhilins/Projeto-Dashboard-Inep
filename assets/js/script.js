@@ -1,15 +1,43 @@
-// Adicione esta linha no início do seu arquivo
 let chartInstances = {};
+const regiao = ['Norte', 'Nordeste', 'Centro-Oeste', 'Sudeste', 'Sul'];
+const basico = [13767582, 4812754, 3642951, 18717083, 6441704];
+const inf = [719675, 2381583,  683163, 3867832, 1376511];
+const fund = [2915590, 7597217, 2122485, 10250077, 3566859];
+const medio = [806098, 2169684, 622571, 3210050, 1058292];
+const idade03 = [194447, 899036, 250078, 1709640, 602190];
+const idade45 = [488977, 1381125, 398173, 2020605, 714768 ];
+const idade610 = [1495119, 3905110, 1163525, 5576156, 1957894];
+const idade1114 = [1210750, 3263006, 902086, 4380211, 1508084 ];
+const idade1517 = [855840, 2322625, 641681, 3392040, 1092657];
+const idade18mais = [567745, 1996680, 287408, 1638539, 552853 ];
+const masc = [2447306, 6974408, 1845859, 9443538, 3265785 ];
+const fem = [2365448, 6793174, 1797092, 9273545, 3175919];
+const yellow = [10907, 52803, 11985, 63864, 18859];
+const white = [468179, 1741018, 834238, 8042787, 4040481];
+const brown = [578190, 6959663, 1207329, 5687211, 820098];
+const black = [86384, 509432, 69205, 755768, 171371];
+const ind = [166586, 83674, 50921, 29693, 23241];
 
-function inserirGraficoTotalBasico(dadosPadrao) {
+function destruirGraficos() {
+  for (const chartId in chartInstances) {
+    if (chartInstances.hasOwnProperty(chartId)) {
+      if (chartInstances[chartId]) {
+        chartInstances[chartId].destroy();
+      }
+    }
+  }
+}
+
+function inserirGraficoTotalBasico() {
+  destruirGraficos();
   // Gráfico de Pizza
   chartInstances['grafico-pizza'] = new Chart(document.getElementById('grafico-pizza').getContext('2d'), {
     type: 'pie',
     data: {
-      labels: ['Nordeste', 'Norte', 'Centro-Oeste', 'Sudeste', 'Sul'],
+      labels: regiao,
       datasets: [{
         label: `Quantidade de matriculados no Ensino Básico por Região`,
-        data: [13767582, 4812754, 3642951, 18717083, 6441704],
+        data: basico,
         backgroundColor: ['#FF914D', '#00BF63', '#8D723D', '#A6A6A6', '#0047FF']
       }]
     }
@@ -19,11 +47,11 @@ function inserirGraficoTotalBasico(dadosPadrao) {
   chartInstances['grafico-linha'] = new Chart(document.getElementById('grafico-linha').getContext('2d'), {
     type: 'line',
     data: {
-      labels: ['Nordeste', 'Norte', 'Centro-Oeste', 'Sudeste', 'Sul'],
+      labels: regiao,
       datasets: [{
         label: 'Quantidade de matriculados no Ensino Básico por Região',
         borderColor: '#ff6384',
-        data: [13767582, 4812754, 3642951, 18717083, 6441704]
+        data: basico
       }]
     }
   });
@@ -32,11 +60,11 @@ function inserirGraficoTotalBasico(dadosPadrao) {
   chartInstances['grafico-barra'] = new Chart(document.getElementById('grafico-barra').getContext('2d'), {
     type: 'bar',
     data: {
-      labels: ['Nordeste', 'Norte', 'Centro-Oeste', 'Sudeste', 'Sul'],
+      labels: regiao,
       datasets: [{
         label: 'Quantidade de matriculados por Região',
         backgroundColor: ['#FF914D', '#00BF63', '#8D723D', '#A6A6A6', '#0047FF'],
-        data: [13767582, 4812754, 3642951, 18717083, 6441704]
+        data: basico
       }]
     }
   });
@@ -45,11 +73,11 @@ function inserirGraficoTotalBasico(dadosPadrao) {
   chartInstances['grafico-horizontal-bar'] = new Chart(document.getElementById('grafico-horizontal-bar').getContext('2d'), {
     type: 'bar',
     data: {
-      labels: ['Nordeste', 'Norte', 'Centro-Oeste', 'Sudeste', 'Sul'],
+      labels: regiao,
       datasets: [{
         label: 'Quantidade de matriculados por Região',
         backgroundColor: ['#FF914D', '#00BF63', '#8D723D', '#A6A6A6', '#0047FF'],
-        data: [13767582, 4812754, 3642951, 18717083, 6441704]
+        data: basico
       }]
     },
     options: {
@@ -79,124 +107,148 @@ window.onload = function () {
 
 function aplicarFiltros() {
   const filtroSelecionado = document.getElementById('filtro').value;
+
   let filtroEspecifico;
+  if (filtroSelecionado === '') {
+    return;
+  } else if (filtroSelecionado in ['etapa_ensino', 'idade', 'cor_raca_etnia', 'genero']) {
+    switch (filtroSelecionado) {
+      case 'etapa_ensino':
+       filtroEspecifico = document.getElementById('etapa_ensinoSelect').value;
+       gerarGrafico('Matrículas por Etapa de Ensino', obterDadosParaEtapaEnsino(filtroEspecifico), 'grafico-pizza', 'pie');
+       gerarGrafico('Matrículas por Etapa de Ensino', obterDadosParaEtapaEnsino(filtroEspecifico), 'grafico-linha', 'line');
+       gerarGrafico('Matrículas por Etapa de Ensino', obterDadosParaEtapaEnsino(filtroEspecifico), 'grafico-barra', 'bar');
+       gerarGrafico('Matrículas por Etapa de Ensino', obterDadosParaEtapaEnsino(filtroEspecifico), 'grafico-horizontal-bar', 'bar');
 
-  switch (filtroSelecionado) {
-    case 'etapa_ensino':
-      filtroEspecifico = document.getElementById('etapa_ensinoSelect').value;
-      gerarGrafico('grafico-pizza', 'Etapa de Ensino', obterDadosParaEtapaEnsino(filtroEspecifico));
-      break;
-    case 'idade':
-      filtroEspecifico = document.getElementById('idadeSelect').value;
-      gerarGrafico('grafico-linha', 'Idade', obterDadosParaIdade(filtroEspecifico));
-      break;
-    case 'cor_raca_etnia':
-      filtroEspecifico = document.getElementById('cor_raca_etniaSelect').value;
-      gerarGrafico('grafico-barra', 'Cor/Raça/Etnia', obterDadosParaCorRacaEtnia(filtroEspecifico));
-      break;
-    case 'genero':
-      filtroEspecifico = document.getElementById('generoSelect').value;
-      gerarGrafico('grafico-horizontal-bar', 'Gênero', obterDadosParaGenero(filtroEspecifico));
-      break;
-    default:
-      break;
+       break;
+      case 'idade':
+       filtroEspecifico = document.getElementById('idadeSelect').value;
+       gerarGrafico('Matrículas por Idade', obterDadosParaEtapaEnsino(filtroEspecifico), 'grafico-pizza', 'pie');
+       gerarGrafico('Matrículas por Idade', obterDadosParaEtapaEnsino(filtroEspecifico), 'grafico-linha', 'line');
+       gerarGrafico('Matrículas por Idade', obterDadosParaEtapaEnsino(filtroEspecifico), 'grafico-barra', 'bar');
+       gerarGrafico('Matrículas por Idade', obterDadosParaEtapaEnsino(filtroEspecifico), 'grafico-horizontal-bar', 'bar');
+
+       break;
+      case 'cor_raca_etnia':
+       filtroEspecifico = document.getElementById('cor_raca_etniaSelect').value;
+       gerarGrafico('Matrículas por Cor/Raça/Etnia', obterDadosParaCorRacaEtnia(filtroEspecifico), 'grafico-pizza', 'pie');
+       gerarGrafico('Matrículas por Cor/Raça/Etnia', obterDadosParaEtapaEnsino(filtroEspecifico), 'grafico-linha', 'line');
+       gerarGrafico('Matrículas por Cor/Raça/Etnia', obterDadosParaEtapaEnsino(filtroEspecifico), 'grafico-barra', 'bar');
+       gerarGrafico('Matrículas por Cor/Raça/Etnia', obterDadosParaEtapaEnsino(filtroEspecifico), 'grafico-horizontal-bar', 'bar');
+
+       break;
+      case 'genero':
+       filtroEspecifico = document.getElementById('generoSelect').value;
+       gerarGrafico('Matrículas por Gênero', obterDadosParaGenero(filtroEspecifico), 'grafico-pizza', 'pie');
+       gerarGrafico('Matrículas por Gênero', obterDadosParaGenero(filtroEspecifico), 'grafico-linha', 'line');
+       gerarGrafico('Matrículas por Gênero', obterDadosParaGenero(filtroEspecifico), 'grafico-barra', 'bar');
+       gerarGrafico('Matrículas por Gênero', obterDadosParaGenero(filtroEspecifico), 'grafico-horizontal-bar', 'bar');
+       break;
+      default:
+       break;
+     }
   }
-}
+ }
+ 
+ function gerarGrafico(label, data, chartId, chartType) {
+  // Destrói o gráfico existente
+  destruirGraficos();
 
-function gerarGrafico(id, label, data) {
-  const ctx = document.getElementById(id).getContext('2d');
-  chartInstances[id] = new Chart(ctx, {
-    type: 'pie', // Altere o tipo de gráfico conforme necessário (pie, line, bar, horizontalBar, etc.)
+  // Cria o novo gráfico
+  chartInstances[chartId] = new Chart(document.getElementById(chartId).getContext('2d'), {
+    type: chartType,
     data: {
-      labels: [label],
+      labels: regiao,
       datasets: [{
         label: label,
-        data: [data],
-        backgroundColor: [
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-        ],
-        borderColor: [
-          'rgba(255, 99, 132, 1)',
-          'rgba(54, 162, 235, 1)',
-          'rgba(255, 206, 86, 1)',
-          'rgba(75, 192, 192, 1)',
-        ],
-        borderWidth: 1,
+        data: data,
+        backgroundColor: ['#FF914D', '#00BF63', '#8D723D', '#A6A6A6', '#0047FF']
       }]
     },
     options: {
-      scales: {
-        y: {
-          beginAtZero: true
+      indexAxis: chartType === 'bar' ? 'y' : undefined, // Ajusta a orientação do eixo para barras horizontais
+      elements: {
+        bar: {
+          borderWidth: 2,
+        }
+      },
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'bottom',
+        },
+        title: {
+          display: true,
+          text: 'Chart.js Vertical Bar Chart'
         }
       }
     }
   });
 }
 
-function obterDadosParaEtapaEnsino(etapaEnsino) {
+ 
+ function obterDadosParaEtapaEnsino(etapaEnsino) {
+
   switch (etapaEnsino) {
-    case 'Infantil':
-      return 30;
-    case 'Fundamental':
-      return 50;
-    case 'Medio':
-      return 20;
-    default:
-      return 0;
+   case 'Infantil':
+    return inf;
+   case 'Fundamental':
+    return fund;
+   case 'Medio':
+    return medio;
+   default:
+    return 0;
   }
-}
-
-function obterDadosParaIdade(idade) {
-  // Suponha que você obtenha esses dados de uma fonte externa
-  // Aqui estamos usando valores fictícios apenas para ilustrar
+ }
+ 
+ function obterDadosParaIdade(idade) {
+  
   switch (idade) {
-    case '03':
-      return 10;
-    case '45':
-      return 20;
-    case '610':
-      return 30;
-    case '1114':
-      return 15;
-    case '1517':
-      return 25;
-    case '18mais':
-      return 40;
-    default:
-      return 0;
+   case '03':
+    return idade03;
+   case '45':
+    return idade45;
+   case '610':
+    return idade610;
+   case '1114':
+    return idade1114;
+   case '1517':
+    return idade1517;
+   case '18mais':
+    return idade18mais;
+   default:
+    return 0;
   }
-}
-
-function obterDadosParaCorRacaEtnia(corRacaEtnia) {
+ }
+ 
+ function obterDadosParaCorRacaEtnia(corRacaEtnia) {
+ 
   switch (corRacaEtnia) {
-    case 'Amarelo':
-      return 5;
+   case 'Amarelo':
+    return yellow;
     case 'Branco':
-      return 15;
-    case 'Indigena':
-      return 2;
-    case 'Pardo':
-      return 20;
-    case 'Preto':
-      return 8;
-    default:
-      return 0;
-  }
+    return white;
+  case 'Indigena':
+   return ind;
+  case 'Pardo':
+   return brown;
+  case 'Preto':
+   return black;
+  default:
+   return 0;
+ }
 }
 
 function obterDadosParaGenero(genero) {
-  switch (genero) {
-    case 'Masculino':
-      return 40;
-    case 'Feminino':
-      return 60;
-    default:
-      return 0;
-  }
+ 
+ switch (genero) {
+  case 'Masculino':
+   return masc;
+  case 'Feminino':
+   return fem;
+  default:
+   return 0;
+ }
 }
 
 function limparFiltros() {
