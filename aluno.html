@@ -27,7 +27,7 @@
 
     <div class="container">
         <div class="sidebar">
-            <aside class="h-full" style="width: 300px; height: 1200px; background-color: #9BB0E5; border-radius: 20px;">
+            <aside class="h-full" style="width: 300px; height: 600px; background-color: #9BB0E5; border-radius: 20px;">
                 <div class="titulo-filtros">
                     <p>Filtros</p>
                 </div>
@@ -41,73 +41,49 @@
                 <hr>
                 <div id="filtros-especificos">
                     <!-- Opções de Escolaridade -->
-                    <!-- Altere as opções de filtro para checkboxes -->
- <div id="etapa_ensinoContainer">
-    <p>Escolaridade</p>
-    <input type="checkbox" id="InfantilCheckbox" value="Infantil">
-    <label for="InfantilCheckbox">Ensino Infantil</label>
-
-    <input type="checkbox" id="FundamentalCheckbox" value="Fundamental">
-    <label for="FundamentalCheckbox">Ensino Fundamental</label>
-
-    <input type="checkbox" id="MedioCheckbox" value="Medio">
-    <label for="MedioCheckbox">Ensino Médio</label>
-    <hr>
-</div>
-
-<!-- Altere as opções de filtro para checkboxes -->
-<div id="idadeContainer">
-    <p>Idade:</p>
-    <input type="checkbox" id="03Checkbox" value="03">
-    <label for="03Checkbox">0 à 3 anos</label>
-
-    <input type="checkbox" id="45Checkbox" value="45">
-    <label for="45Checkbox">4 à 5 anos</label>
-
-    <input type="checkbox" id="610Checkbox" value="610">
-    <label for="610Checkbox">6 à 10 anos</label>
-
-    <input type="checkbox" id="1114Checkbox" value="1114">
-    <label for="1114Checkbox">11 à 14 anos</label>
-
-    <input type="checkbox" id="1517Checkbox" value="1517">
-    <label for="1517Checkbox">15 à 17 anos</label>
-
-    <input type="checkbox" id="18maisCheckbox" value="18mais">
-    <label for="18maisCheckbox">18 anos ou mais</label>
-    <hr>
-</div>
-
-<!-- Altere as opções de filtro para checkboxes -->
-<div id="cor_raca_etniaContainer">
-    <p>Raça</p>
-    <input type="checkbox" id="AmareloCheckbox" value="Amarelo">
-    <label for="AmareloCheckbox">Amarelo</label>
-
-    <input type="checkbox" id="BrancoCheckbox" value="Branco">
-    <label for="BrancoCheckbox">Branco</label>
-
-    <input type="checkbox" id="IndigenaCheckbox" value="Indigena">
-    <label for="IndigenaCheckbox">Indígena</label>
-
-    <input type="checkbox" id="PardoCheckbox" value="Pardo">
-    <label for="PardoCheckbox">Pardo</label>
-
-    <input type="checkbox" id="PretoCheckbox" value="Preto">
-    <label for="PretoCheckbox">Preto</label>
-    <hr>
-</div>
-
-<!-- Altere as opções de filtro para checkboxes -->
-<div id="generoContainer">
-    <p>Gênero</p>
-    <input type="checkbox" id="MasculinoCheckbox" value="Masculino">
-    <label for="MasculinoCheckbox">Masculino</label>
-
-    <input type="checkbox" id="FemininoCheckbox" value="Feminino">
-    <label for="FemininoCheckbox">Feminino</label>
-</div>
-
+                    <div id="etapa_ensinoContainer">
+                        <label for="etapa_ensino">Escolaridade</label>
+                        <select id="etapa_ensinoSelect">
+                            <option value="Infantil">Ensino Infantil</option>
+                            <option value="Fundamental">Ensino Fundamental</option>
+                            <option value="Medio">Ensino Médio</option>
+                        </select>
+                        <hr>
+                    </div>
+                    <!-- Opções de Idade -->
+                    <div id="idadeContainer">
+                        <label for="idade">Idade:</label>
+                        <select id="idadeSelect">
+                            <option value="03">0 à 3 anos</option>
+                            <option value="45">4 à 5 anos</option>
+                            <option value="610">6 à 10 anos</option>
+                            <option value="1114">11 à 14 anos</option>
+                            <option value="1517">15 à 17 anos</option>
+                            <option value="18mais">18 anos ou mais</option>
+                        </select>
+                        <hr>
+                    </div>
+                    <!-- Opções de Raça -->
+                    <div id="cor_raca_etniaContainer">
+                        <label for="cor_raca_etnia">Raça</label>
+                        <select id="cor_raca_etniaSelect">
+                            <option value="Amarelo">Amarelo</option>
+                            <option value="Branco">Branco</option>
+                            <option value="Indigena">Indígena</option>
+                            <option value="Pardo">Pardo</option>
+                            <option value="Preto">Preto</option>
+                        </select>
+                        <hr>
+                    </div>
+                    <!-- Opções de Gênero -->
+                    <div id="generoContainer">
+                        <label for="genero">Gênero</label>
+                        <select id="generoSelect">
+                            <option value="Masculino">Masculino</option>
+                            <option value="Feminino">Feminino</option>
+                        </select>
+                    </div>
+                </div>
                 <div class="buttons-filtros">
                     <div class="aplicar-filtros">
                         <button onclick="aplicarFiltros()">Aplicar Filtros</button>
