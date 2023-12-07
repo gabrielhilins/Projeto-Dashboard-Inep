@@ -18,6 +18,19 @@ const brown = [578190, 6959663, 1207329, 5687211, 820098];
 const black = [86384, 509432, 69205, 755768, 171371];
 const ind = [166586, 83674, 50921, 29693, 23241];
 
+function exportarGrafico(id) {
+  if (chartInstances.hasOwnProperty(id)) {
+    const chartCanvas = chartInstances[id].canvas;
+    const imagem = chartCanvas.toDataURL('image/png');
+    const link = document.createElement('a');
+    link.href = imagem;
+    link.download = 'grafico.png';
+    link.click();
+  } else {
+    alert('O gráfico não existe.');
+  }
+}
+
 function destruirGraficos() {
   for (const chartId in chartInstances) {
     if (chartInstances.hasOwnProperty(chartId)) {
@@ -105,6 +118,18 @@ window.onload = function () {
   inserirGraficoTotalBasico();
 };
 
+function limparFiltros() {
+  // Lógica para limpar os filtros
+  document.getElementById('filtro').value = '';
+  document.getElementById('etapa_ensinoSelect').value = '';
+  document.getElementById('idadeSelect').value = '';
+  document.getElementById('cor_raca_etniaSelect').value = '';
+  document.getElementById('generoSelect').value = '';
+
+  // Chama a função iniciar para reexibir os gráficos iniciais
+  inserirGraficoTotalBasico();
+}
+
 function aplicarFiltros() {
   const filtroSelecionado = document.getElementById('filtro').value;
 
@@ -125,8 +150,9 @@ function aplicarFiltros() {
         case 'Medio':
           gerarGrafico('Quantidade de matriculados Ensino Médio por Regiao', medio);
           break;
+        default:
+          break;
        }
-       
        break;
       case 'idade':
        filtroEspecifico = document.getElementById('idadeSelect').value;
@@ -148,6 +174,8 @@ function aplicarFiltros() {
           break;
         case '18mais':
           gerarGrafico('Quantidade de matriculados 18+ anos por Regiao', idade18mais);
+          break;
+        default:
           break;
        }
        break;
@@ -222,132 +250,53 @@ function aplicarFiltros() {
   });
 
   // Gráfico de Barra
-  chartInstances['grafico-barra'] = new Chart(document.getElementById('grafico-barra').getContext('2d'), {
-    type: 'bar',
-    data: {
-      labels: regiao,
-      datasets: [{
-        label: label,
-        backgroundColor: ['#FF914D', '#00BF63', '#8D723D', '#A6A6A6', '#0047FF'],
-        data: data
-      }]
-    }
-  });
-
-  // Gráfico de Barra Horizontal
-  chartInstances['grafico-horizontal-bar'] = new Chart(document.getElementById('grafico-horizontal-bar').getContext('2d'), {
-    type: 'bar',
-    data: {
-      labels: regiao,
-      datasets: [{
-        label: label,
-        backgroundColor: ['#FF914D', '#00BF63', '#8D723D', '#A6A6A6', '#0047FF'],
-        data: data
-      }]
-    },
-    options: {
-      indexAxis: 'y',
-      elements: {
-        bar: {
-          borderWidth: 2,
-        }
+chartInstances['grafico-barra'] = new Chart(document.getElementById('grafico-barra').getContext('2d'), {
+  type: 'bar',
+  data: {
+    labels: regiao,
+    datasets: [{
+      label: label && label !== '' ? label : '', 
+      backgroundColor: ['#FF914D', '#00BF63', '#8D723D', '#A6A6A6', '#0047FF'],
+      data: data
+    }]
+  },
+  options: {
+    legend: {
+      labels: {
+        fontColor: '#000000'
       },
-      responsive: true,
-      plugins: {
-        legend: {
-          position: 'bottom',
-        },
-        title: {
-          display: true,
-          text: 'Chart.js Vertical Bar Chart'
-        }
-      }
-    }
-  });
-}
+    },
+  },
+});
 
- 
- function obterDadosParaEtapaEnsino(etapaEnsino) {
+// Gráfico de Barra Horizontal
+chartInstances['grafico-horizontal-bar'] = new Chart(document.getElementById('grafico-horizontal-bar').getContext('2d'), {
+  type: 'bar',
+  data: {
+    labels: regiao,
+    datasets: [{
+      backgroundColor: ['#FF914D', '#00BF63', '#8D723D', '#A6A6A6', '#0047FF'],
+      data: data
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    elements: {
+      bar: {
+        borderWidth: 2,
+      },
+    },
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'bottom',
+      },
+      title: {
+        display: true,
+        text: label,
+      },
+    },
+  },
+});
 
-  switch (etapaEnsino) {
-   case 'Infantil':
-    return inf;
-   case 'Fundamental':
-    return fund;
-   case 'Medio':
-    return medio;
-   default:
-    return 0;
-  }
  }
- 
- function obterDadosParaIdade(idade) {
-  
-  switch (idade) {
-   case '03':
-    return idade03;
-   case '45':
-    return idade45;
-   case '610':
-    return idade610;
-   case '1114':
-    return idade1114;
-   case '1517':
-    return idade1517;
-   case '18mais':
-    return idade18mais;
-   default:
-    return 0;
-  }
- }
- 
- function obterDadosParaCorRacaEtnia(corRacaEtnia) {
- 
-  switch (corRacaEtnia) {
-   case 'Amarelo':
-    return yellow;
-    case 'Branco':
-    return white;
-  case 'Indigena':
-   return ind;
-  case 'Pardo':
-   return brown;
-  case 'Preto':
-   return black;
-  default:
-   return 0;
- }
-}
-
-function obterDadosParaGenero(genero) {
- 
- switch (genero) {
-  case 'Masculino':
-   return masc;
-  case 'Feminino':
-   return fem;
-  default:
-   return 0;
- }
-}
-
-function limparFiltros() {
-  // Lógica para limpar os filtros
-  document.getElementById('filtro').value = '';
-  document.getElementById('etapa_ensinoSelect').value = '';
-  document.getElementById('idadeSelect').value = '';
-  document.getElementById('cor_raca_etniaSelect').value = '';
-  document.getElementById('generoSelect').value = '';
-
-  // Chama a função iniciar para reexibir os gráficos iniciais
-  inserirGraficoTotalBasico();
-}
-
-function exportarGrafico(id) {
-  const chartCanvas = chartInstances[id].canvas;
-  const imagem = chartCanvas.toDataURL('image/png');
-  const link = document.createElement('a');
-  link.href = imagem;
-  link.download = 'grafico.png';
-  link.click();
-}
