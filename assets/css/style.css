@@ -207,3 +207,75 @@ header {
 .contact {
     text-align: right;
 }
+
+@media screen and (max-width: 767px) {
+    * {
+        font-size: 12px;
+    }
+    
+    header {
+        height: 5%; /* Restaurando a altura para telas menores */
+        margin-bottom: 20px; /* Ajustando a margem inferior */
+    }
+
+    body {
+        padding-top: 25px;
+    }
+
+    .mapa,
+    .circles,
+    .subtitles,
+    .texto,
+    .filter,
+    .links-dashboard {
+        padding-left: 3%; /* Reduzindo o padding para telas menores */
+    }
+
+    .filter-text {
+        padding-left: 20px; /* Ajustando o padding */
+    }
+
+    .links-dashboard a {
+        width: 100px; /* Ajustando a largura para ocupar menos espaço */
+        height: 100px; /* Ajustando a altura para ocupar menos espaço */
+        font-size: 14px; /* Reduzindo o tamanho da fonte para telas menores */
+    }
+
+    .footer {
+        height: 5%; /* Restaurando a altura para telas menores */
+        margin-top: 20%; /* Ajustando a margem superior */
+        padding: 10px; /* Ajustando o padding */
+    }
+}
+
+@media screen and (min-width: 1366px) {
+    header {
+        height: 10%; /* Aumentando a altura para telas maiores */
+        margin-bottom: 40px; /* Ajustando a margem inferior */
+    }
+
+    .mapa,
+    .circles,
+    .subtitles,
+    .texto,
+    .filter,
+    .links-dashboard {
+        padding-left: 5%; /* Aumentando o padding para telas maiores */
+    }
+
+    .filter-text {
+        padding-left: 152px; /* Aumentando o padding */
+    }
+
+    .links-dashboard a {
+        width: 200px; /* Aumentando a largura para ocupar mais espaço */
+        height: 200px; /* Aumentando a altura para ocupar mais espaço */
+        font-size: 28px; /* Aumentando o tamanho da fonte para telas maiores */
+    }
+
+    .footer {
+        height: 10%; /* Aumentando a altura para telas maiores */
+        margin-top: 4%; /* Ajustando a margem superior */
+        padding: 30px; /* Aumentando o padding */
+    }
+}
