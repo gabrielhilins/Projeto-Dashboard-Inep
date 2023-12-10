@@ -1,6 +1,6 @@
 let chartInstances = {};
 const regiao = ['Norte', 'Nordeste', 'Centro-Oeste', 'Sudeste', 'Sul'];
-const basico = [13767582, 4812754, 3642951, 18717083, 6441704];
+const basico = [4812754, 13767582, 3642951, 18717083, 6441704];
 const inf = [719675, 2381583,  683163, 3867832, 1376511];
 const fund = [2915590, 7597217, 2122485, 10250077, 3566859];
 const medio = [806098, 2169684, 622571, 3210050, 1058292];
