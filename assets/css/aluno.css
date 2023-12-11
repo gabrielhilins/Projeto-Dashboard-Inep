@@ -44,6 +44,7 @@ header {
 
 aside {
     padding-top: 10px;
+    color: white;
 }
 
 .sidebar {
@@ -152,8 +153,14 @@ a:hover {
     width: 400px;
 }
 
-#pizza {
-    height: 450px;
+#pizza,
+#line {
+    height: 500px;
+}
+
+#bar,
+#horizontal-bar {
+    height:300px;
 }
 
 button {
@@ -173,8 +180,8 @@ button {
 
 .footer {
     bottom: 0;
-    height: 10%;
-    margin-top: 3%;
+    height: 5%;
+    margin-top: 40%;
     width: 100%;
     background-color: #9BB0E5;
     color: #fff;
@@ -233,3 +240,48 @@ button {
 .contact {
     text-align: right;
 }
+
+@media screen and (max-width: 767px) {
+    * {
+        font-size: 12px;
+    }
+
+    body {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    header {
+        height: 5%; /* Restaurando a altura para telas menores */
+        margin-bottom: 20px; /* Ajustando a margem inferior */
+    }
+
+    body {
+        padding-top: 25px;
+    }
+
+    .filtros {
+        width: 100px;
+        height: 300px;
+    }
+
+    .graficos {
+        width: 90px;
+        height: 90px;
+    }
+
+    #pizza,
+    #line,
+    #bar,
+    #horizontal-bar {
+        width: 250px;
+        height: 250px;
+    }
+
+    .footer {
+        height: 5%;
+        margin-bottom: 0; 
+        padding: 10px; 
+    }
+}
+
