@@ -4,20 +4,21 @@ body {
     width: 100%;
     height: 100%;
     margin: 0;
+    margin-bottom: auto;
+    min-height: 100vh; /* Defina a altura mínima do body para 100% da altura da viewport */
 }
 
 header {
     position: fixed;
-        display: flex;
-        top: 0;
-        width: 100%;
-        height: 10%;
-        margin-bottom: 40px;
-        background-color: #9BB0E5;
-        justify-content: space-between;
-        color: #ffffff;
-        align-items: center;
-        z-index: 1000;
+    display: flex;
+    top: 0;
+    width: 100%;
+    height: 10%;
+    background-color: #9BB0E5;
+    justify-content: space-between;
+    color: #ffffff;
+    align-items: center;
+    z-index: 1000;
 }
 
 .home {
@@ -41,10 +42,12 @@ header {
 }
 .texto1, 
 .texto2 {
+    font-family: 'Roboto Mono';
     text-align: justify;
     justify-content: center;
     align-items: center;
-    padding-left: 5%;
+    padding-left: 3%;
+    padding-right: 3%;
 }
 
 
@@ -59,41 +62,56 @@ header {
 }
 
 .titulo-tech {
-    padding-top: 4%;
+    padding-top: 0%;
     text-align: center;
     color: #000;
-    font-family: Roboto Mono;
+    font-family: 'Roboto Mono';
     font-size: 32px;
     font-style: normal;
     font-weight: 700;
     line-height: normal;
 }
 
-.logo-tech1 {
+.tecnologias {
     display: flex;
-    flex-direction: row;
-    padding-left: 10%;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 2%; /* Ajuste conforme necessário */
 }
 
-.logo-tech1 img {
-    padding: 50px;
+.tecnologia {
+    margin: 10px; /* Adicione margens entre as imagens conforme necessário */
+}
+
+.tecnologia img {
+    padding: 40px; /* Adicione algum espaçamento interno conforme necessário */
 }
 
 .logo-tech2 {
     display: flex;
-    flex-direction: row;
-    padding-left: 10%;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-left: 5%;
+}
+
+.logo-tech2 .tecnologia2 {
+    flex: 0 0 33.33%; /* Ajuste a largura da imagem conforme necessário */
+    box-sizing: border-box;
+    padding: 20px;
+    text-align: center;
 }
 
 .logo-tech2 img {
-    padding: 50px;
+    max-width: 100%;
+    height: auto;
 }
 
 
 .footer {
+   /* position: fixed; */
     bottom: 0;
     height: 10%;
-    margin-top: 38%;
+    margin-top: 3%;
     width: 100%;
     background-color: #9BB0E5;
     color: #fff;
@@ -101,7 +119,7 @@ header {
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    padding: 20px; 
+    padding: 2%; 
     text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     font-family: Roboto Mono;
     font-size: 20px;
