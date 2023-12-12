@@ -13,7 +13,7 @@ header {
     top: 0;
     width: 100%;
     height: 10%;
-    margin-bottom: 40px;
+    margin-bottom: 5%;
     background-color: #9BB0E5;
     justify-content: space-between;
     color: #ffffff;
@@ -22,6 +22,7 @@ header {
 }
 
 .home {
+    
     padding-left: 4%;
 }
 
@@ -40,7 +41,7 @@ header {
 .container {
     display: flex;
     flex-direction: row;
-    padding-top: 6%;
+    padding-top: 8%;
 }
 
 aside {
@@ -198,8 +199,8 @@ button {
 
 .footer {
     bottom: 0;
-    height: 10%px;
-    margin-top: 3%px;
+    height: 10%;
+    margin-top: 3%;
     width: 100%;
     background-color: #9BB0E5;
     color: #fff;
@@ -207,7 +208,7 @@ button {
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    padding: 20px; 
+    padding: 2%; 
     text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     font-family: Roboto Mono;
     font-size: 20px;
@@ -257,4 +258,39 @@ button {
 
 .contact {
     text-align: right;
+}
+@media screen and (max-width: 767px) {
+    /* Regras de mídia para telas menores */
+    header {
+        height: 8%;
+        padding: 10px;
+    }
+
+    .titulo {
+        font-size: 12px;
+    }
+
+    .container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        padding-top: 20px;
+    }
+
+    .graficos {
+        grid-template-columns: 1fr;
+        padding-left: 10px;
+    }
+
+    .grafico {
+        width: 100%;
+        margin-right: 0;
+    }
+
+    .footer {
+        height: 8%;
+        margin-top: 10%;
+        padding: 10px;
+    }
 }
