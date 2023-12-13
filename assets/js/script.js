@@ -187,7 +187,7 @@ function aplicarFiltros() {
           gerarGrafico('Quantidade de matriculados Amarelos por Regiao', yellow);
           break;
         case 'Branco':
-          gerarGrafico('Quantidade de matriculados Brancos Anos por Regiao', white);
+          gerarGrafico('Quantidade de matriculados Brancos por Regiao', white);
           break;
         case 'Indigena':
           gerarGrafico('Quantidade de matriculados Indigenas por Regiao', ind);
